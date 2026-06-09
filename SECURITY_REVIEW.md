@@ -31,6 +31,13 @@ to:         "leads@silveroakglobal.in"
   form submit fires to Web3Forms, so leads land in an inbox, not the CRM.
 - **Fix:** enable Web3Forms hCaptcha/Botcheck + domain restriction, **rotate both keys**, and ideally
   proxy submissions through your own backend (so the key is server-side) and push to Leadrat there.
+- **✅ CONFIRMED (authorized PoC, 2026-06-09):** One labeled test lead was POSTed directly to
+  `api.web3forms.com/submit` with the first key — **no website interaction** — and returned
+  `{"success":true,"message":"Form submitted successfully!"}`. Proves the key is fully usable off-site,
+  and the lead lands in **email**, not Leadrat.
+- **⚠️ Escalation:** the attacker-supplied `to` field was accepted/echoed by the API — the recipient may
+  be **attacker-controllable** (redirect leads / use the account as a spam relay). Not tested against an
+  external address (would email a third party). Verify and lock down.
 
 ### H2 — Missing security headers
 | Header | Status | Risk |
