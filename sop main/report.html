@@ -257,6 +257,31 @@ footer.foot b{color:var(--ink)}
       <div class="pin" data-sev=med data-fid="J6" style="top:52%;left:68%"><div class="ring"></div><div class="tag">3</div></div>
     </div></div>
 
+  <div class="plate"><div class="cap"><span class="pno">PLATE 9</span><h3>Mobile · homepage (390&nbsp;px)</h3><span class="src">true 390px render via iframe</span></div>
+    <div class="figure" style="background:#16263a;display:flex;justify-content:center;padding:22px 0">
+      <div style="width:300px;background:#0c1e30;border:1px solid rgba(255,255,255,.14);overflow:hidden;border-radius:6px">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 11px;background:#fff">
+          <div style="font-family:'Newsreader',serif;color:#c28641;font-size:9px;line-height:1.05">SILVER&nbsp;OAK<br><span style="font-size:5px;letter-spacing:.12em;color:#9a7d2e">PROPERTIES</span></div>
+          <div style="display:flex;gap:11px;align-items:center;color:#1c3350"><span style="font-size:11px">&#127462;&#127466;</span><span style="font-size:17px">&#9776;</span></div>
+        </div>
+        <div style="height:116px;background:linear-gradient(120deg,#365a7d,#16314a);display:grid;place-items:center">
+          <div style="text-align:center;filter:blur(1px)"><div style="font-family:'Newsreader',serif;color:#1f3b52;font-size:13px;font-weight:600">Invest in Dubai Real Estate</div><div style="color:#43607a;font-size:8px">Your Investment, Our Commitment</div></div>
+        </div>
+        <div style="padding:11px;display:grid;gap:7px;color:#cdd8e2">
+          <div style="font-size:7px;letter-spacing:.12em;color:#9fb0c0">PROPERTY TYPE</div>
+          <div style="border:1px solid rgba(255,255,255,.14);padding:7px 9px;font-size:10px">Select an option ▾</div>
+          <div style="background:#c28641;color:#1a1205;text-align:center;font-weight:700;font-size:10px;letter-spacing:.18em;padding:8px">SEARCH</div>
+        </div>
+        <div style="padding:0 11px 13px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:#0f2336;border:1px solid rgba(255,255,255,.07)"><div style="height:58px;background:linear-gradient(120deg,#2a4763,#16314a)"></div><div style="padding:6px"><div style="font-family:'Newsreader',serif;color:#e3b277;font-size:9px;line-height:1.1">Bora Bora at Damac Islands</div><div style="font-family:'Courier Prime',monospace;color:#fff;font-size:8px">AED 2,296,000</div><div style="color:#7e94aa;font-size:5px">USD 625,000 &nbsp; INR 5,35,12,000</div></div></div>
+          <div style="background:#0f2336;border:1px solid rgba(255,255,255,.07)"><div style="height:58px;background:linear-gradient(120deg,#34506e,#16314a)"></div><div style="padding:6px"><div style="font-family:'Newsreader',serif;color:#e3b277;font-size:9px;line-height:1.1">Bali at DAMAC Islands</div><div style="font-family:'Courier Prime',monospace;color:#fff;font-size:8px">AED 2,407,000</div><div style="color:#7e94aa;font-size:5px">USD 649,890 &nbsp; INR 5,61,55,310</div></div></div>
+        </div>
+      </div>
+      <div class="pin" data-sev=high data-fid="M1" style="top:9%;left:60%"><div class="ring"></div><div class="tag">1</div></div>
+      <div class="pin" data-sev=high data-fid="M3" style="top:26%;left:50%"><div class="ring"></div><div class="tag">2</div></div>
+      <div class="pin" data-sev=high data-fid="M2" style="top:88%;left:38%"><div class="ring"></div><div class="tag">3</div></div>
+    </div></div>
+
   </div>
 </div></section>
 
@@ -278,7 +303,7 @@ footer.foot b{color:var(--ink)}
 </aside>
 
 <script>
-const CAT={A:"Hero",B:"Search",C:"Listings",D:"Data / pricing",E:"Inventory",F:"Calculators",G:"Forms",H:"Content",I:"Type / layout",J:"Components",K:"Footer / brand",L:"Security"};
+const CAT={A:"Hero",B:"Search",C:"Listings",D:"Data / pricing",E:"Inventory",F:"Calculators",G:"Forms",H:"Content",I:"Type / layout",J:"Components",K:"Footer / brand",L:"Security",M:"Mobile"};
 const SEVN={crit:"Critical",high:"High",med:"Medium",low:"Low"};
 const F=[
 {id:"A1",sev:"crit",t:"Blank grey hero on load",d:`The hero <video> has no poster image, so for 6+ seconds after load it's a full-screen (~945px) blank grey block — the first thing every visitor sees. Verified: readyState stayed 0 across two reloads.`,f:`Add a poster image (first video frame) so a real image paints instantly while the video buffers.`},
@@ -368,7 +393,12 @@ const F=[
 {id:"L5",sev:"high",t:"Public admin login",d:`The CMS admin login at sop-cms.silveroak.ae ("Login | Real Estate Web") is reachable from any IP.`,f:`Enforce MFA, rate-limiting/lockout, and IP all-listing or VPN.`},
 {id:"L6",sev:"med",t:"Emails harvestable in bundle",d:`Internal emails (marketing@, info@, leads@) are present in the client JS bundle — easy phishing/spam targets.`,f:`Avoid shipping internal emails to the client.`},
 {id:"L7",sev:"med",t:"Stack disclosed via headers",d:`Headers reveal the stack: x-powered-by: Next.js, server: Vercel, x-matched-path, x-nextjs-prerender.`,f:`Strip x-powered-by and unnecessary x-* headers.`},
-{id:"L8",sev:"low",t:"Placeholder data in production",d:`Sample values shipped to production: email@example.com, john@gmail.com, and tel:+1234567890.`,f:`Clean up sample/placeholder data.`}
+{id:"L8",sev:"low",t:"Placeholder data in production",d:`Sample values shipped to production: email@example.com, john@gmail.com, and tel:+1234567890.`,f:`Clean up sample/placeholder data.`},
+{id:"M1",sev:"high",t:"Tap targets too small",d:`At 390px, 104 of 117 interactive elements are smaller than the 44x44px minimum — the hamburger is 28x28, nav rows are 38px tall, and the country selector is only 24px. Hard to tap accurately. (Measured in a true 390px render.)`,f:`Enforce a 44x44px minimum hit area on all mobile controls.`},
+{id:"M2",sev:"high",t:"Unreadable tiny fonts on mobile",d:`Font sizes drop to 5-6px on mobile (158 text nodes are under 12px) — e.g. the USD/INR price conversion sublines on cards are effectively illegible.`,f:`Set a minimum body size (~14px) and scale sub-text up on mobile.`},
+{id:"M3",sev:"high",t:"Hero text illegible on mobile",d:`The 16:9 desktop video collapses to a ~219px-tall strip at 390px, so the baked-in headline ("Invest in Dubai Real Estate With Experts") becomes tiny and blurry. Compounds the baked-in-text problem (A2).`,f:`Use a mobile-specific crop/poster and render the headline as real responsive text.`},
+{id:"M4",sev:"med",t:"Mobile menu: tiny logo & old Twitter",d:`The slide-in mobile menu repeats the too-small logo and uses the legacy Twitter bird among the social icons.`,f:`Enlarge the logo; update the X icon.`},
+{id:"M5",sev:"low",t:"No horizontal overflow (good)",d:`Verified good: at 390px the document scroll width is 380px — no horizontal scroll/overflow on mobile.`,f:`No action needed.`}
 ];
 const FM=Object.fromEntries(F.map(x=>[x.id,x]));
 const active=new Set(["crit","high","med","low"]);let query="";

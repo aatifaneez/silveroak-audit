@@ -5,7 +5,7 @@
 `[reported]` Aatif's visual find · `[PoC]` actively proven · `[observed]` seen in screenshots
 **Severity:** 🔴 Critical · 🟠 High · 🟡 Medium · 🔵 Low
 
-**Totals:** 88 distinct issues — 🔴 12 · 🟠 24 · 🟡 39 · 🔵 13 (+ confirmed-good list at end)
+**Totals:** 93 distinct issues — 🔴 12 · 🟠 27 · 🟡 40 · 🔵 14 (+ confirmed-good list at end)
 
 ---
 
@@ -156,6 +156,21 @@
 | L6 | 🟡 | **Internal emails harvestable** in client bundle (`marketing@`, `info@`, `leads@`). | verified |
 | L7 | 🟡 | **Stack/info disclosure** via headers (`x-powered-by: Next.js`, `server: Vercel`, `x-matched-path`). | measured |
 | L8 | 🔵 | **Placeholder/sample data in production code** (`email@example.com`, `john@gmail.com`, `tel:+1234567890`). | verified |
+
+## M. Mobile (390px — measured in a true 390px render)
+
+| # | Sev | Issue | Tag |
+|---|---|---|---|
+| M1 | 🟠 | **Tap targets too small** — 104 of 117 interactive elements are under the 44×44px minimum (hamburger **28×28**, nav rows 38px, country selector **24px** tall). | measured |
+| M2 | 🟠 | **Unreadable tiny fonts** — sizes drop to **5–6px**; 158 text nodes are under 12px (e.g. the USD/INR price sublines on cards). | measured |
+| M3 | 🟠 | **Hero text illegible on mobile** — the 16:9 video collapses to a **~219px-tall strip**, so the baked-in headline becomes tiny/blurry (compounds A2). | measured |
+| M4 | 🟡 | **Mobile menu** repeats the too-small logo and uses the **legacy Twitter bird** icon. | observed |
+| M5 | 🟢 | **No horizontal overflow** at 390px (document scroll width 380px). *Verified good — not a flaw.* | measured |
+
+> Note: a true mobile viewport couldn't be reached via window-resize (the window is maximized and the
+> resize is ignored). The mobile render was obtained by loading the site in a 390px-wide same-origin
+> iframe (the site sets no X-Frame-Options/CSP — see L4 — so it frames freely), giving real mobile
+> media-query layout + inspectable computed styles.
 
 ---
 
