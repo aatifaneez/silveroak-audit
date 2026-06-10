@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Silver Oak Global — Audit Dossier</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,400&family=Archivo:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0c1e30; --navy-2:#081523; --bg:#0a141f; --panel:#0f2336; --panel-2:#122a40;
+  --bronze:#c28641; --bronze-2:#e3b277; --bronze-soft:rgba(194,134,65,.14);
+  --ink:#eaf1f8; --muted:#8ea6bd; --line:rgba(194,134,65,.18);
+  --crit:#ff4d52; --high:#ff9636; --med:#ffd24a; --low:#5fb0ff;
+  --shadow:0 24px 60px -20px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif; line-height:1.55;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+/* atmosphere */
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(900px 600px at 12% -5%, rgba(194,134,65,.16), transparent 60%),
+    radial-gradient(1000px 700px at 105% 10%, rgba(30,80,130,.22), transparent 55%),
+    linear-gradient(180deg,#0b1726,#0a121d 60%,#080f18);
+}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:46px 46px; mask-image:radial-gradient(circle at 50% 20%,#000,transparent 80%);}
+.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 26px}
+
+/* header */
+header.masthead{padding:64px 0 30px;position:relative}
+.kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.42em;text-transform:uppercase;color:var(--bronze-2);opacity:.9}
+.kicker .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--crit);margin-right:10px;box-shadow:0 0 10px var(--crit);animation:blink 1.8s infinite}
+@keyframes blink{50%{opacity:.25}}
+h1.title{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(40px,7vw,86px);line-height:.96;letter-spacing:-.02em;margin:18px 0 6px}
+h1.title em{font-style:italic;color:var(--bronze-2)}
+.sub{color:var(--muted);max-width:680px;font-size:17px}
+.meta-row{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:22px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted)}
+.meta-row b{color:var(--ink);font-weight:500}
+
+/* stat dashboard */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:40px 0 8px}
+.stat{position:relative;border:1px solid var(--line);border-radius:16px;padding:20px 18px 16px;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0));overflow:hidden;cursor:pointer;transition:.25s}
+.stat:hover{transform:translateY(-4px);border-color:rgba(194,134,65,.5)}
+.stat .n{font-family:'Fraunces',serif;font-size:clamp(34px,5vw,52px);font-weight:600;line-height:1}
+.stat .l{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.stat .bar{position:absolute;left:0;bottom:0;height:4px;width:100%}
+.stat[data-s=crit] .n{color:var(--crit)} .stat[data-s=crit] .bar{background:var(--crit)}
+.stat[data-s=high] .n{color:var(--high)} .stat[data-s=high] .bar{background:var(--high)}
+.stat[data-s=med] .n{color:var(--med)} .stat[data-s=med] .bar{background:var(--med)}
+.stat[data-s=low] .n{color:var(--low)} .stat[data-s=low] .bar{background:var(--low)}
+.stat.off{opacity:.32;filter:grayscale(.6)}
+
+/* section headers */
+.sec{padding:54px 0 8px}
+.sec-h{display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:26px}
+.sec-h .idx{font-family:'JetBrains Mono',monospace;color:var(--bronze);font-size:13px}
+.sec-h h2{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(24px,3.4vw,34px);margin:0;letter-spacing:-.01em}
+.sec-h p{margin:0 0 0 auto;color:var(--muted);font-size:13px;max-width:340px;text-align:right}
+
+/* filter bar */
+.controls{position:sticky;top:0;z-index:40;background:rgba(8,17,28,.86);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 0;margin-top:10px}
+.controls .wrap{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.chip{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:7px}
+.chip .sw{width:9px;height:9px;border-radius:50%}
+.chip[data-s=crit] .sw{background:var(--crit)} .chip[data-s=high] .sw{background:var(--high)} .chip[data-s=med] .sw{background:var(--med)} .chip[data-s=low] .sw{background:var(--low)}
+.chip.on{color:var(--ink);border-color:rgba(194,134,65,.55);background:var(--bronze-soft)}
+.chip:hover{color:var(--ink)}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:6px 14px;background:rgba(255,255,255,.03)}
+.search input{background:transparent;border:0;color:var(--ink);font-family:'Archivo';font-size:13.5px;outline:none;width:190px}
+.search input::placeholder{color:var(--muted)}
+
+/* SCENES */
+.scenes{display:grid;gap:30px}
+.scene-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--navy-2);box-shadow:var(--shadow)}
+.scene-top{display:flex;align-items:center;gap:8px;padding:11px 16px;background:linear-gradient(180deg,#0e2034,#0b1827);border-bottom:1px solid var(--line)}
+.scene-top .dots{display:flex;gap:6px}.scene-top .dots i{width:11px;height:11px;border-radius:50%;display:block}
+.scene-top .dots i:nth-child(1){background:#ff5f57}.scene-top .dots i:nth-child(2){background:#febc2e}.scene-top .dots i:nth-child(3){background:#28c840}
+.scene-top .url{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted);background:rgba(0,0,0,.25);border-radius:7px;padding:4px 10px;max-width:520px;margin:0 auto;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.scene-cap{padding:14px 18px 2px;display:flex;gap:12px;align-items:baseline}
+.scene-cap h3{font-family:'Fraunces',serif;font-weight:500;font-size:19px;margin:0}
+.scene-cap span{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bronze);letter-spacing:.1em}
+.stage{position:relative;margin:14px 18px 20px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
+
+/* markers */
+.marker{position:absolute;width:30px;height:30px;border-radius:50%;transform:translate(-50%,-50%);display:grid;place-items:center;
+  font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12px;color:#fff;cursor:pointer;z-index:5;
+  border:2px solid #fff; box-shadow:0 0 0 3px rgba(0,0,0,.35),0 6px 14px rgba(0,0,0,.5);transition:transform .15s}
+.marker::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:2px solid currentColor;opacity:.6;animation:ping 2.1s cubic-bezier(0,0,.2,1) infinite}
+@keyframes ping{0%{transform:scale(.6);opacity:.8}80%,100%{transform:scale(1.5);opacity:0}}
+.marker[data-sev=crit]{background:var(--crit);color:var(--crit)} .marker[data-sev=high]{background:var(--high);color:var(--high)}
+.marker[data-sev=med]{background:var(--med);color:#3a2c00;border-color:#fff} .marker[data-sev=med]::after{color:var(--med)}
+.marker[data-sev=low]{background:var(--low);color:var(--low)}
+.marker span{color:#fff;position:relative;z-index:2}.marker[data-sev=med] span{color:#3a2c00}
+.marker:hover{transform:translate(-50%,-50%) scale(1.22)}
+.marker.hide{display:none}
+
+/* recreated UI bits */
+.mock{font-family:'Archivo',sans-serif}
+.m-hero{background:linear-gradient(180deg,#0c1e30,#0c1e30 84px,#b9c3cc 84px);height:330px;position:relative}
+.m-nav{height:84px;display:flex;align-items:center;gap:22px;padding:0 22px;color:#dfe7ee;font-size:13px}
+.m-logo{display:flex;flex-direction:column;line-height:1}.m-logo b{font-family:'Fraunces',serif;color:var(--bronze-2);font-size:13px}.m-logo small{font-size:7px;letter-spacing:.18em;color:#9fb0c0}
+.m-nav .nl{opacity:.85;font-size:12.5px}.m-nav .nl:first-of-type{margin-left:18px}
+.m-grey{position:absolute;inset:84px 0 0;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#b4bec8,#b4bec8 14px,#aeb8c2 14px,#aeb8c2 28px)}
+.m-grey .ghost{font-family:'Fraunces',serif;font-weight:600;font-size:34px;color:#4d6076;filter:blur(2.4px);text-align:center;letter-spacing:.5px}
+.m-grey .note{position:absolute;bottom:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#54677d}
+
+.m-search{display:grid;grid-template-columns:1fr 1fr 1fr 130px;background:#0c1e30;color:#cdd8e2}
+.m-search .f{padding:16px 18px;border-right:1px solid rgba(255,255,255,.08)}
+.m-search .f label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#9fb0c0;display:block;margin-bottom:7px}
+.m-search .f .v{display:flex;justify-content:space-between;color:#e9eef4;font-size:13px}.m-search .f .v.ph{color:#e9eef4}
+.m-search .btn{background:var(--bronze);color:#1a1205;display:grid;place-items:center;font-weight:700;letter-spacing:.22em;font-size:13px;position:relative;left:6px}
+
+.m-card{width:300px;background:#0f2336;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;margin:18px auto}
+.m-card .img{height:150px;background:linear-gradient(120deg,#2a4763,#16314a);position:relative;display:grid;place-items:center;color:#7e98b1;font-size:11px;font-family:'JetBrains Mono',monospace}
+.m-card .img .sq{font-size:30px;transform:scaleX(2.1);opacity:.6}
+.m-card .body{padding:14px}
+.m-card .ttl{font-family:'Fraunces',serif;color:var(--bronze-2);font-size:15px}
+.m-card .price{font-family:'JetBrains Mono',monospace;font-size:18px;color:#fff;margin:6px 0 2px}
+.m-card .loc{color:#8ea6bd;font-size:12px}
+.m-card .acts{display:flex;gap:8px;margin-top:12px}
+.m-card .acts b{flex:1;text-align:center;font-size:11px;padding:7px 0;border-radius:7px;background:rgba(194,134,65,.16);color:var(--bronze-2);font-weight:500}
+
+.m-detail{display:flex;gap:20px;flex-wrap:wrap;padding:22px;background:#0f2336}
+.m-detail .stat2{min-width:120px}
+.m-detail .lab{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8ea6bd}
+.m-detail .big{font-family:'JetBrains Mono',monospace;font-size:24px;color:#fff;margin-top:5px}
+.m-detail .cur{display:inline-flex;gap:4px;margin-top:8px}.m-detail .cur b{font-size:10px;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.07);color:#9fb0c0}.m-detail .cur b.on{background:var(--bronze);color:#1a1205}
+.m-detail .roi .sub{color:#8ea6bd;font-size:12px;margin-top:4px;font-style:italic}
+
+.m-calc{padding:22px;background:#0f2336;display:grid;gap:16px;max-width:430px}
+.m-calc .row{display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px}
+.m-calc .row .lab{font-size:12px;color:#9fb0c0}
+.m-calc .stepper{display:flex;align-items:center;gap:12px}
+.m-calc .stepper b{font-family:'JetBrains Mono',monospace;color:#fff;font-size:15px}
+.m-calc .stepper button{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#cdd8e2;cursor:default}
+.m-calc .arrow{color:var(--bronze-2);font-size:16px}
+
+.m-form{padding:22px;background:#0f2336;display:grid;gap:12px;max-width:470px}
+.m-form input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:11px 13px;color:#e9eef4;font-family:'Archivo';font-size:13px}
+.m-form .ph{display:grid;grid-template-columns:78px 1fr;gap:8px}
+.m-form .cc{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:0 10px;font-size:13px;color:#cdd8e2}
+.m-form .submit{background:var(--bronze);color:#1a1205;text-align:center;font-weight:700;padding:12px;border-radius:8px;letter-spacing:.08em;font-size:13px}
+.m-form .leak{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#6f86a0;border-top:1px dashed rgba(255,255,255,.12);padding-top:10px}
+.m-form .leak b{color:var(--crit)}
+
+.m-footer{background:#0a1a2b;padding:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.m-footer .col b{font-family:'JetBrains Mono',monospace;color:#cdd8e2;font-size:12px}
+.m-footer .col div{color:#8ea6bd;font-size:12px;margin-top:6px}
+.m-footer .socials{display:flex;gap:10px}.m-footer .socials i{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;font-style:normal;color:#9fb0c0;font-size:12px;position:relative}
+.m-footer .socials i .box{position:absolute;inset:-7px;border:1px dashed var(--crit);border-radius:8px;opacity:.5}
+
+.m-chat{padding:22px;background:#0f2336;display:flex;justify-content:flex-end}
+.m-chatw{width:280px;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.1)}
+.m-chatw .hd{background:var(--bronze);color:#1a1205;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.m-chatw .hd .av{width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.18);display:grid;place-items:center;font-size:14px}
+.m-chatw .hd b{font-size:13px}.m-chatw .hd .dots3{margin-left:auto;letter-spacing:1px}
+.m-chatw .bd{background:#0c1c2e;padding:18px 14px;min-height:90px;display:grid;place-items:center}
+.m-chatw .bd .un{font-size:12px;color:var(--crit);font-family:'JetBrains Mono',monospace;border:1px solid rgba(255,77,82,.4);padding:6px 10px;border-radius:8px}
+
+/* FINDINGS LIST */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.f-card{border:1px solid var(--line);border-radius:14px;padding:16px 17px;background:linear-gradient(180deg,rgba(255,255,255,.022),rgba(255,255,255,0));cursor:pointer;transition:.18s;position:relative;overflow:hidden}
+.f-card:hover{transform:translateY(-3px);border-color:rgba(194,134,65,.45)}
+.f-card .strip{position:absolute;left:0;top:0;bottom:0;width:4px}
+.f-card[data-sev=crit] .strip{background:var(--crit)}.f-card[data-sev=high] .strip{background:var(--high)}.f-card[data-sev=med] .strip{background:var(--med)}.f-card[data-sev=low] .strip{background:var(--low)}
+.f-card .top{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.f-card .id{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--bronze);font-weight:700}
+.badge{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:999px;font-weight:700}
+.badge.crit{background:rgba(255,77,82,.16);color:var(--crit)}.badge.high{background:rgba(255,150,54,.16);color:var(--high)}.badge.med{background:rgba(255,210,74,.16);color:var(--med)}.badge.low{background:rgba(95,176,255,.16);color:var(--low)}
+.f-card .cat{margin-left:auto;font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.f-card h4{margin:0 0 5px;font-size:15px;font-weight:600}
+.f-card p{margin:0;color:var(--muted);font-size:12.7px}
+.f-card.hide{display:none}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(4,9,15,.6);backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:.25s;z-index:90}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,92vw);background:linear-gradient(180deg,#0e2236,#0a1828);border-left:1px solid var(--line);box-shadow:-30px 0 60px rgba(0,0,0,.6);z-index:100;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.1,1);padding:30px 28px;overflow-y:auto}
+.drawer.open{transform:translateX(0)}
+.drawer .x{position:absolute;top:18px;right:20px;background:none;border:1px solid var(--line);color:var(--muted);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:16px}
+.drawer .d-id{font-family:'JetBrains Mono',monospace;color:var(--bronze);font-size:13px;letter-spacing:.1em}
+.drawer h3{font-family:'Fraunces',serif;font-weight:500;font-size:27px;margin:12px 0 16px;line-height:1.15}
+.drawer .meta{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.drawer .blk{margin-bottom:20px}
+.drawer .blk .h{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:7px}
+.drawer .blk p{margin:0;font-size:14.5px;color:#dbe6f1}
+.drawer .fix{border-left:2px solid var(--bronze);padding-left:14px}
+.drawer .fix p{color:var(--bronze-2)}
+
+footer.foot{padding:60px 0 50px;text-align:center;color:var(--muted);font-size:12.5px;font-family:'JetBrains Mono',monospace}
+footer.foot b{color:var(--bronze-2)}
+
+.reveal{opacity:0;transform:translateY(22px);animation:rise .7s forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+@media(max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}.m-search{grid-template-columns:1fr 1fr}.sec-h p{display:none}.search{width:100%;margin:8px 0 0}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header class="masthead"><div class="wrap">
+  <div class="kicker reveal"><span class="dot"></span>Confidential audit dossier · silveroakglobal.com</div>
+  <h1 class="title reveal" style="animation-delay:.05s">Silver Oak Global<br><em>Site Audit</em> &amp; Findings</h1>
+  <p class="sub reveal" style="animation-delay:.12s">A forensic review of the live website — UX, data integrity, content, layout, and security. Every finding below is pinned to a recreation of where it appears. Click a marker or a card to inspect.</p>
+  <div class="meta-row reveal" style="animation-delay:.18s">
+    <span>Compiled <b>2026-06-09</b></span><span>Scope <b>Desktop + data + passive security</b></span><span>Findings <b id="total">—</b></span><span>Verified-good items excluded</span>
+  </div>
+  <div class="stats">
+    <div class="stat reveal" data-s="crit" style="animation-delay:.22s"><div class="n" data-c="14">0</div><div class="l">Critical</div><div class="bar"></div></div>
+    <div class="stat reveal" data-s="high" style="animation-delay:.28s"><div class="n" data-c="31">0</div><div class="l">High</div><div class="bar"></div></div>
+    <div class="stat reveal" data-s="med" style="animation-delay:.34s"><div class="n" data-c="38">0</div><div class="l">Medium</div><div class="bar"></div></div>
+    <div class="stat reveal" data-s="low" style="animation-delay:.40s"><div class="n" data-c="17">0</div><div class="l">Low</div><div class="bar"></div></div>
+  </div>
+</div></header>
+
+<div class="controls"><div class="wrap">
+  <span style="font-family:'JetBrains Mono';font-size:11px;color:var(--muted);letter-spacing:.1em">FILTER</span>
+  <button class="chip on" data-s="crit"><span class="sw"></span>Critical</button>
+  <button class="chip on" data-s="high"><span class="sw"></span>High</button>
+  <button class="chip on" data-s="med"><span class="sw"></span>Medium</button>
+  <button class="chip on" data-s="low"><span class="sw"></span>Low</button>
+  <div class="search"><span style="color:var(--muted)">⌕</span><input id="q" placeholder="search findings…"></div>
+</div></div>
+
+<!-- ANNOTATED RECREATIONS -->
+<section class="sec"><div class="wrap">
+  <div class="sec-h reveal"><span class="idx">01</span><h2>Annotated recreations</h2><p>Recreated UI with each issue pinned. Markers are colour-coded by severity — click to inspect.</p></div>
+  <div class="scenes">
+
+  <!-- HERO -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">https://www.silveroakglobal.com/</div></div>
+    <div class="scene-cap"><h3>Homepage hero</h3><span>A1 A2 A3 A9 J9</span></div>
+    <div class="stage mock m-hero">
+      <div class="m-nav">
+        <div class="m-logo"><b>SILVER OAK</b><small>PROPERTIES</small></div>
+        <span class="nl">Properties ▾</span><span class="nl">Events</span><span class="nl">Developers</span><span class="nl">Area Guides</span><span class="nl">Blogs</span><span class="nl">Mortgage</span><span class="nl">Who We Are ▾</span>
+      </div>
+      <div class="m-grey">
+        <div class="ghost">Invest in Dubai Real Estate With Experts</div>
+        <div class="note">▶ 7.3 MB video · no poster · readyState 0 for 6s+</div>
+      </div>
+      <div class="marker" data-sev=crit data-fid="A1" style="top:62%;left:50%"><span>1</span></div>
+      <div class="marker" data-sev=crit data-fid="A2" style="top:40%;left:50%"><span>2</span></div>
+      <div class="marker" data-sev=crit data-fid="A3" style="top:84%;left:30%"><span>3</span></div>
+      <div class="marker" data-sev=med data-fid="A9" style="top:14%;left:9%"><span>4</span></div>
+      <div class="marker" data-sev=med data-fid="J9" style="top:14%;left:30%"><span>5</span></div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">https://www.silveroakglobal.com/ · hero search</div></div>
+    <div class="scene-cap"><h3>Hero search bar</h3><span>B1 B2 B3 B5 B6</span></div>
+    <div class="stage mock">
+      <div class="m-search">
+        <div class="f"><label>Property Type</label><div class="v">Select an option <span>▾</span></div></div>
+        <div class="f"><label>Locations</label><div class="v">Select a location <span>▾</span></div></div>
+        <div class="f"><label>Starting Price</label><div class="v ph">500000</div></div>
+        <div class="btn">SEARCH</div>
+      </div>
+      <div class="marker" data-sev=high data-fid="B2" style="top:50%;left:14%"><span>1</span></div>
+      <div class="marker" data-sev=high data-fid="B1" style="top:50%;left:46%"><span>2</span></div>
+      <div class="marker" data-sev=med data-fid="B5" style="top:62%;left:72%"><span>3</span></div>
+      <div class="marker" data-sev=med data-fid="B6" style="top:50%;left:96%"><span>4</span></div>
+      <div class="marker" data-sev=high data-fid="B3" style="top:14%;left:88%"><span>5</span></div>
+    </div>
+  </div>
+
+  <!-- LISTING CARD -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">/offplan-properties · listing card</div></div>
+    <div class="scene-cap"><h3>Property card</h3><span>C1 C4 C5 I1</span></div>
+    <div class="stage mock" style="background:#0a1726">
+      <div class="m-card">
+        <div class="img"><div class="sq">🏢</div></div>
+        <div class="body">
+          <div class="ttl">Bayz 101 by Danube</div>
+          <div class="price">AED 1,175,000</div>
+          <div class="loc">Business Bay</div>
+          <div class="acts"><b>Call</b><b>Email</b><b>WhatsApp</b></div>
+        </div>
+      </div>
+      <div class="marker" data-sev=high data-fid="C1" style="top:24%;left:50%"><span>1</span></div>
+      <div class="marker" data-sev=med data-fid="I1" style="top:52%;left:38%"><span>2</span></div>
+      <div class="marker" data-sev=med data-fid="C5" style="top:62%;left:66%"><span>3</span></div>
+      <div class="marker" data-sev=med data-fid="C4" style="top:84%;left:50%"><span>4</span></div>
+    </div>
+  </div>
+
+  <!-- DETAIL STATS -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">/offplan-properties/bayz-101-by-danube</div></div>
+    <div class="scene-cap"><h3>Detail page stats</h3><span>H5 D7 I1 G1</span></div>
+    <div class="stage mock">
+      <div class="m-detail">
+        <div class="stat2"><div class="lab">Starting from</div><div class="big">1,175,000</div><div class="cur"><b class="on">AED</b><b>USD</b><b>INR</b></div></div>
+        <div class="stat2 roi"><div class="lab">ROI</div><div class="big">7-10%</div><div class="sub">"ROI up to 7-10% in Returns"</div></div>
+        <div class="stat2"><div class="lab">Handover</div><div class="big">Q2 2028</div></div>
+      </div>
+      <div class="marker" data-sev=med data-fid="I1" style="top:36%;left:13%"><span>1</span></div>
+      <div class="marker" data-sev=med data-fid="D7" style="top:70%;left:13%"><span>2</span></div>
+      <div class="marker" data-sev=med data-fid="H5" style="top:74%;left:46%"><span>3</span></div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">/mortgage · calculator</div></div>
+    <div class="scene-cap"><h3>Mortgage calculator</h3><span>F2 F3 F6 F1</span></div>
+    <div class="stage mock">
+      <div class="m-calc">
+        <div class="row"><div class="lab">Property Price</div><div class="stepper"><b>1,175,000</b><span class="arrow">⌄</span></div></div>
+        <div class="row"><div class="lab">Interest Rate</div><div class="stepper"><button>−</button><b>4.0%</b><button>+</button><span class="arrow">⌄</span></div></div>
+        <div class="row"><div class="lab">Monthly payment</div><div class="stepper"><b>AED 5,420</b></div></div>
+      </div>
+      <div class="marker" data-sev=high data-fid="F2" style="top:50%;left:62%"><span>1</span></div>
+      <div class="marker" data-sev=high data-fid="F3" style="top:50%;left:50%"><span>2</span></div>
+      <div class="marker" data-sev=low data-fid="F6" style="top:50%;left:78%"><span>3</span></div>
+      <div class="marker" data-sev=low data-fid="F7" style="top:18%;left:74%"><span>4</span></div>
+      <div class="marker" data-sev=high data-fid="F1" style="top:82%;left:40%"><span>5</span></div>
+    </div>
+  </div>
+
+  <!-- FORM + SECURITY -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">contact / priority-list form → api.web3forms.com</div></div>
+    <div class="scene-cap"><h3>Lead form &amp; pipeline</h3><span>G1 G3 L1 L2</span></div>
+    <div class="stage mock">
+      <div class="m-form">
+        <input placeholder="First name"><input placeholder="Email address">
+        <div class="ph"><div class="cc">🇦🇪 +971 ▾</div><input placeholder="Phone number"></div>
+        <div class="submit">Submit Details</div>
+        <div class="leak">// submits to <b>api.web3forms.com/submit</b><br>access_key:"e2df016a-…" · to:"leads@silveroakglobal.in" → <b>email, not Leadrat</b></div>
+      </div>
+      <div class="marker" data-sev=high data-fid="G1" style="top:50%;left:62%"><span>1</span></div>
+      <div class="marker" data-sev=med data-fid="G3" style="top:50%;left:18%"><span>2</span></div>
+      <div class="marker" data-sev=crit data-fid="L1" style="top:84%;left:30%"><span>3</span></div>
+      <div class="marker" data-sev=crit data-fid="L2" style="top:90%;left:72%"><span>4</span></div>
+    </div>
+  </div>
+
+  <!-- CHAT -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">Tidio chat widget (all pages)</div></div>
+    <div class="scene-cap"><h3>Chat widget</h3><span>J1 J2 J4 J5</span></div>
+    <div class="stage mock m-chat">
+      <div class="m-chatw">
+        <div class="hd"><div class="av">💬</div><b>Hi there 👋</b><span class="dots3">⋮</span></div>
+        <div class="bd"><div class="un">⚠ Chat is currently unavailable</div></div>
+      </div>
+      <div class="marker" data-sev=med data-fid="J4" style="top:24%;left:46%"><span>1</span></div>
+      <div class="marker" data-sev=med data-fid="J5" style="top:24%;left:88%"><span>2</span></div>
+      <div class="marker" data-sev=crit data-fid="J1" style="top:64%;left:62%"><span>3</span></div>
+      <div class="marker" data-sev=crit data-fid="J2" style="top:90%;left:50%"><span>4</span></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="scene-card">
+    <div class="scene-top"><div class="dots"><i></i><i></i><i></i></div><div class="url">site footer</div></div>
+    <div class="scene-cap"><h3>Footer &amp; brand</h3><span>K1 K2 J6</span></div>
+    <div class="stage mock">
+      <div class="m-footer">
+        <div class="col"><b>Office</b><div>The Bay Gate Tower, Business Bay</div><div>Contact: +971 800 555 555</div><div>tel:+1234567890 · info@silveroakglobal.ae</div></div>
+        <div class="socials"><i>f<span class="box"></span></i><i>◎</i><i>▶</i><i>𝕏</i><i>in</i></div>
+      </div>
+      <div class="marker" data-sev=high data-fid="K1" style="top:78%;left:18%"><span>1</span></div>
+      <div class="marker" data-sev=med data-fid="K2" style="top:78%;left:40%"><span>2</span></div>
+      <div class="marker" data-sev=med data-fid="J6" style="top:55%;left:66%"><span>3</span></div>
+    </div>
+  </div>
+
+  </div>
+</div></section>
+
+<!-- ALL FINDINGS -->
+<section class="sec"><div class="wrap">
+  <div class="sec-h reveal"><span class="idx">02</span><h2>All findings</h2><p>Every issue, filterable. Click any card for the full description and fix.</p></div>
+  <div class="grid" id="grid"></div>
+  <p id="empty" style="display:none;color:var(--muted);text-align:center;padding:30px;font-family:'JetBrains Mono'">No findings match this filter.</p>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  Silver Oak Global — interactive audit dossier · prepared by <b>Claude</b> · 2026-06-09<br>
+  Companion docs in repo: MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW
+</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer">
+  <button class="x" id="closeD">✕</button>
+  <div class="d-id" id="dId"></div>
+  <h3 id="dTitle"></h3>
+  <div class="meta" id="dMeta"></div>
+  <div class="blk"><div class="h">What's wrong</div><p id="dDesc"></p></div>
+  <div class="blk fix"><div class="h">Recommended fix</div><p id="dFix"></p></div>
+</aside>
+
+<script>
+const CAT={A:"Hero",B:"Search",C:"Listings",D:"Data / pricing",E:"Inventory",F:"Calculators",G:"Forms",H:"Content",I:"Type / layout",J:"Components",K:"Footer / brand",L:"Security"};
+const SEVN={crit:"Critical",high:"High",med:"Medium",low:"Low"};
+const F=[
+{id:"A1",sev:"crit",t:"Blank grey hero on load",d:`The hero <video> has no poster image, so for 6+ seconds after load it's a full-screen (~945px) blank grey block — the first thing every visitor sees. Verified: readyState stayed 0 across two reloads.`,f:`Add a poster image (first video frame) so a real image paints instantly while the video buffers.`},
+{id:"A2",sev:"crit",t:"Headline baked into the video",d:`"Invest in Dubai Real Estate With Experts" is rendered inside the MP4 — so it's blurry/low-res, not selectable, invisible to Google (no SEO), invisible to screen readers, and impossible to edit without re-exporting the video.`,f:`Render the headline + subhead as real HTML text overlaid on the video.`},
+{id:"A3",sev:"crit",t:"No visible CTA in the hero",d:`The search bar (the primary call-to-action) is pushed below the fold, so the first screen everyone sees has no call to action at all.`,f:`Surface the search bar inside the hero and add a button CTA (e.g. "Talk to an Advisor").`},
+{id:"A4",sev:"high",t:"7.3 MB autoplay video",d:`The hero loads a 7.3 MB MP4 with no poster and no preload strategy, and it wasn't reliably autoplaying (paused on load).`,f:`Compress/encode a lighter loop, add a poster, and lazy-load.`},
+{id:"A5",sev:"high",t:"Header colour transition broken",d:`The header colour doesn't switch to navy properly during scroll.`,f:`Fix the scroll/route state that drives the header colour.`},
+{id:"A6",sev:"high",t:"Header stuck white on return",d:`After resubmitting / returning to the home hero, the header turns white and never reverts to navy.`,f:`Reset the header colour state correctly on navigation back to home.`},
+{id:"A7",sev:"med",t:"Hero main-text font mismatch",d:`The hero main text font doesn't match anything else on the site.`,f:`Use the site's type system (and make it real text — see A2).`},
+{id:"A8",sev:"med",t:"Hero subtext font mismatch",d:`The hero subtext font also doesn't match the rest of the site.`,f:`Standardise on the site type scale.`},
+{id:"A9",sev:"med",t:"Logo wordmark too small",d:`The "Silver Oak Properties" wordmark is tiny and low-contrast against the navy bar.`,f:`Increase its size and contrast.`},
+{id:"A10",sev:"med",t:"Language selector layout shift",d:`The flag/language selector renders blank on load, then pops in — causing a visible layout shift.`,f:`Reserve its space or server-render the default flag.`},
+{id:"A11",sev:"low",t:"No loading animation",d:`There's no skeleton or intro animation while the page loads.`,f:`Add a lightweight skeleton/intro.`},
+{id:"A12",sev:"low",t:"Heavy video over CSS animation",d:`A heavy background video is used where lightweight CSS motion would achieve the effect.`,f:`Use a static image with subtle CSS motion, or a far smaller clip.`},
+{id:"B1",sev:"high",t:"Type & location can't combine",d:`Selecting a location clears the property-type filter — you can't filter by both at once.`,f:`Make filters independent and combinable.`},
+{id:"B2",sev:"high",t:"Always defaults to off-plan",d:`Search never asks rent / for-sale / off-plan — it always defaults to off-plan.`,f:`Add a listing-type selector as a primary filter.`},
+{id:"B3",sev:"high",t:"No sorting at all",d:`Listings have no sort — not even by price — and no sort selector. Competitors all offer price ↑↓, newest, size, AED/sqft.`,f:`Add a sort control.`},
+{id:"B4",sev:"high",t:"Filters too limited",d:`No beds, baths, size, community, or status filters.`,f:`Add the full filter set (beds/baths/size/status/community).`},
+{id:"B5",sev:"med",t:"Starting Price hardcoded 500000",d:`The Starting Price field is a number input pre-filled with the value 500000 (not a placeholder), so users must delete it to search below that.`,f:`Use an empty default / placeholder.`},
+{id:"B6",sev:"med",t:"SEARCH button overflows",d:`The gold SEARCH button's right edge is at 1915px vs the 1910px page width — it's clipped by overflow-x:hidden.`,f:`Contain the button within the grid.`},
+{id:"B7",sev:"med",t:"Filter selectors barely visible",d:`The filter controls are low-contrast and easy to miss.`,f:`Increase affordance and contrast.`},
+{id:"B8",sev:"low",t:"Too few listings to test filters",d:`There isn't enough inventory to meaningfully exercise the filters.`,f:`Populate inventory (see E1).`},
+{id:"C1",sev:"high",t:"Property images squished",d:`Listing images aren't the placeholder's aspect ratio, so they're stretched/distorted to fit (a component missing object-fit defaults to stretch).`,f:`Wrap images in a fixed aspect-ratio box with object-fit: cover.`},
+{id:"C2",sev:"high",t:"Squishing on the main page too",d:`The same image-distortion appears on the homepage.`,f:`Apply the same aspect-ratio fix sitewide.`},
+{id:"C3",sev:"med",t:"Low-res / zoomed images",d:`Card images are low resolution and over-zoomed.`,f:`Serve higher-resolution, correctly-cropped responsive images.`},
+{id:"C4",sev:"med",t:"Call/Email/WhatsApp on every card",d:`Every listing card shows Call/Email/WhatsApp before the user has even opened the property — clutter and repetition.`,f:`Move contact actions to the detail view (or a hover state).`},
+{id:"C5",sev:"med",t:"Sparse listing cards",d:`Cards show only name, price, location and size — no beds/baths, agent, freshness, or verified badge that competitors show.`,f:`Enrich card metadata.`},
+{id:"D1",sev:"crit",t:"Diamondz price wrong",d:`Site lists Diamondz by Danube at AED 1,890,000, but the market/launch start is ~AED 1,100,000 (studio) — overstated by ~790k.`,f:`Correct to the true entry price.`},
+{id:"D2",sev:"crit",t:"One by Binghatti price wrong",d:`Site lists One by Binghatti at AED 1,111,111, but the market start is ~AED 1,699,999 — understated by ~590k.`,f:`Correct the figure.`},
+{id:"D3",sev:"crit",t:"Parkwood price wrong",d:`Site lists Parkwood by Emaar at AED 1,450,000, but the market start is ~AED 1,750,000 — understated by ~300k.`,f:`Correct the figure.`},
+{id:"D4",sev:"med",t:"Minor price drift",d:`Smaller mismatches: Bayz 102 (high), Azizi Milan 20 (high), Sobha Orbis (low), Riverside Crescent 320 (low).`,f:`Reconcile each against your CRM/source data.`},
+{id:"D5",sev:"med",t:"Azizi Milan mislabeled location",d:`Azizi Milan 30/20/9 are labelled "Al Furjan", but the Azizi Milan development is in City of Arabia / Dubailand.`,f:`Fix the location data.`},
+{id:"D6",sev:"high",t:"500M ghost listing",d:`The original "Palace Residences at Al Mamsha = AED 500,000,000" error isn't in the live 39 listings or the sitemap — it lived in the homepage carousel, which currently renders empty. The data source is suspect.`,f:`Audit the carousel/featured data source and add price sanity bounds.`},
+{id:"D7",sev:"med",t:"Currency converter unverified",d:`Detail pages have an AED/USD/INR toggle. AED is pegged to USD at 3.6725, so a AED 1,175,000 studio should show ~$320k. The converter's rate needs an interactive check.`,f:`Verify it uses the peg / a live rate.`},
+{id:"E1",sev:"crit",t:"Only 39 listings live",d:`The only populated inventory is 39 off-plan projects. /buy-properties, /properties-for-sale-in-dubai and /rent-properties are all empty ("no properties found").`,f:`Populate the secondary/rental inventory.`},
+{id:"E2",sev:"high",t:"Partner developers show 0 properties",d:`Most developers in the "Developers Partnered With Us" list actually have 0 properties.`,f:`Hide empty developers or backfill their listings.`},
+{id:"E3",sev:"high",t:"Homepage carousel empty",d:`The homepage "Exclusive Properties" carousel rendered 0 cards on load — intermittently failing.`,f:`Fix the carousel's data source/loading.`},
+{id:"E4",sev:"med",t:"Sharjah / UAQ 'coming soon'",d:`Sharjah and Umm Al Quwain pages show "expansion in progress" with 0 listings.`,f:`Hide until populated, or populate.`},
+{id:"E5",sev:"med",t:"'In Dubai' shows non-Dubai",d:`The "Exclusive Properties in Dubai" section features Sharjah/UAQ projects.`,f:`Fix the labelling or the content.`},
+{id:"E6",sev:"low",t:"Generic logo alt text",d:`Developer logos use generic alt text "Developer 1…12" instead of brand names (accessibility + SEO miss).`,f:`Use real brand names in alt.`},
+{id:"E7",sev:"low",t:"Marquee logos uneven/duplicated",d:`The developer logo marquee has inconsistent sizes and duplicated logos (EMAAR/NAKHEEL repeat).`,f:`Normalise sizing and dedupe.`},
+{id:"F1",sev:"high",t:"Mortgage calc ignores minimum",d:`The mortgage calculator shows values even when the minimum requirement isn't met — inconsistent with the affordability calculator, which gates its output.`,f:`Gate output behind validation consistently.`},
+{id:"F2",sev:"high",t:"Interest rate steps 0.1 only",d:`The interest rate only changes by 0.1 via the buttons, making 3.99% or 4.99% impossible to enter.`,f:`Allow a finer step and free numeric input.`},
+{id:"F3",sev:"high",t:"Can't type interest rate",d:`There's no way to type the interest rate manually.`,f:`Allow typed input.`},
+{id:"F4",sev:"med",t:"Bad affordability example",d:`The example monthly income in the affordability calculator is below 10k AED — which isn't even eligible.`,f:`Use a valid example value.`},
+{id:"F5",sev:"med",t:"Pre-approval country-code bug",d:`The "Get Pre-approval" button has issues with the country-code UI.`,f:`Fix the country-code component.`},
+{id:"F6",sev:"low",t:"Dead arrow (interest field)",d:`A random arrow beside the interest-rate field does nothing.`,f:`Remove it or wire it up.`},
+{id:"F7",sev:"low",t:"Dead arrow (price field)",d:`A random arrow in the property-price field does nothing.`,f:`Remove it or wire it up.`},
+{id:"G1",sev:"high",t:"No phone validation anywhere",d:`Phone inputs are type=tel and required, but have no pattern/format rule, so they accept anything. This is the same across every form on the site.`,f:`Add international phone validation (e.g. libphonenumber).`},
+{id:"G2",sev:"high",t:"Brochure validation inaccurate",d:`The Download-Brochure form validates fields but inaccurately, especially phone numbers.`,f:`Fix the validation rules.`},
+{id:"G3",sev:"med",t:"Basic country-code selector",d:`The country-code selection UI is crude.`,f:`Use a proper international phone component.`},
+{id:"H1",sev:"high",t:"Brochures incomplete",d:`The brochures downloaded from the site are very incomplete.`,f:`Complete the brochure content.`},
+{id:"H2",sev:"high",t:"'Read All' → write-review page",d:`Clicking "Read All" on a Google review opens a page to post a review — it never shows the actual review text.`,f:`Link to the full review content.`},
+{id:"H3",sev:"high",t:"Blogs have no visible titles",d:`Blog cards render with images only — the titles exist in the markup but aren't displayed.`,f:`Render the post titles on the cards.`},
+{id:"H4",sev:"med",t:"'50+ specialists' but 37",d:`The About page claims "50+ specialists" but the team is actually 37.`,f:`Use the real number.`},
+{id:"H5",sev:"med",t:"ROI redundant subtext",d:`Detail pages show "ROI: 7-10%" and then a subtext "ROI up to 7-10% in Returns" — literally repeating it.`,f:`Remove the duplicate caption.`},
+{id:"H6",sev:"med",t:"Nonsensical listing subtexts",d:`The subtexts under listing-detail stats are unnecessary or don't make sense.`,f:`Rewrite or remove them.`},
+{id:"H7",sev:"med",t:"Reviews truncate mid-sentence",d:`Review cards cut off mid-sentence with "…" and have uneven heights/fill.`,f:`Clamp to whole words at a fixed line count.`},
+{id:"H8",sev:"med",t:"Confusing review labels",d:`The "Achievements" heading is followed by a "Google Reviews" subtitle — confusing hierarchy.`,f:`Clarify the section labelling.`},
+{id:"H9",sev:"low",t:"Low-contrast awards",d:`The Recognition & Awards images are faint/low-contrast on white.`,f:`Add a backing card or border.`},
+{id:"H10",sev:"low",t:"Oversized FAQ, no sources",d:`FAQ text is very large and the answers cite no sources.`,f:`Reduce the text size; cite/link sources.`},
+{id:"I1",sev:"med",t:"Mixed number fonts",d:`Price digits render in Montserrat while body and stats render in Raleway — inconsistent number fonts.`,f:`Unify the number font across the site.`},
+{id:"I2",sev:"med",t:"Font discontinuity",d:`There's a general lack of font continuity across the site.`,f:`Consolidate the type system.`},
+{id:"I3",sev:"med",t:"Inconsistent vertical spacing",d:`Section paddings jump around (10/24/32/48px plus a stray 32px margin) with no consistent scale.`,f:`Adopt a spacing scale.`},
+{id:"I4",sev:"med",t:"Inconsistent horizontal gutters",d:`Content left-edges are ~24–32px in most sections but ~92px (Affordability) and ~115px (FAQ), so the content visibly jumps inward/outward on scroll.`,f:`Use one shared max-width container.`},
+{id:"I5",sev:"high",t:"Navbar not sticky",d:`The header is position:relative on a 6,344px-tall page, so the nav scrolls away with no persistent way back to the menu.`,f:`Make the header sticky.`},
+{id:"I6",sev:"low",t:"Zig-zag service icons",d:`The "Our Services" icons alternate up/down, reading as unbalanced/misaligned.`,f:`Align them consistently.`},
+{id:"I7",sev:"low",t:"Double-shadow card",d:`The priority-list form card has an offset double shadow and a large empty gap in its two-column layout.`,f:`Use a single shadow and rebalance the columns.`},
+{id:"J1",sev:"crit",t:"Chatbot unavailable",d:`The chatbot reports that it's "unavailable".`,f:`Restore availability / fix the provider configuration.`},
+{id:"J2",sev:"crit",t:"Leads never reach the CRM",d:`The chatbot/forms say "sent, we'll contact you soon" but the lead never reaches Leadrat — it goes to a Gmail inbox only. Confirmed via an authorized test submission.`,f:`Wire submissions to Leadrat server-side.`},
+{id:"J3",sev:"med",t:"Chat widget overlaps content",d:`The Tidio chat widget (z-index ~2.1B) overlaps content — the 5th "Our Services" label and footer social logos.`,f:`Add section padding or reposition the widget.`},
+{id:"J4",sev:"med",t:"Chatbot named 'Hi there 👋'",d:`The chatbot's name is literally "Hi there 👋" and it has no profile picture.`,f:`Set a real name and a profile image.`},
+{id:"J5",sev:"med",t:"Notifications opt-out without opt-in",d:`The chat 3-dot menu offers "turn off notifications" although the user was never prompted to enable them.`,f:`Add a proper opt-in flow.`},
+{id:"J6",sev:"med",t:"Weird button hitboxes",d:`The social icons and "Our Services" buttons have clickable areas that don't match the visual shape of the element.`,f:`Size the clickable control to the icon and round it.`},
+{id:"J7",sev:"med",t:"Expert photos crop heads",d:`Expert images in the contact section have heads not fully visible (object-fit: cover with a bad object-position).`,f:`Fix object-position / crop.`},
+{id:"J8",sev:"med",t:"Dropdown opens off-edge",d:`The "Who We Are" dropdown opens at left:1651px, hard against the right edge — overflow risk.`,f:`Right-align the submenu.`},
+{id:"J9",sev:"med",t:"'Categories' instead of Insights",d:`The Properties mega-menu groups Area Guides and Blogs under a heading called "Categories" instead of a proper Insights/Resources tab like other firms.`,f:`Restructure the navigation.`},
+{id:"J10",sev:"low",t:"Old Twitter logo",d:`The footer still uses the legacy Twitter bird icon.`,f:`Update to the X logo.`},
+{id:"K1",sev:"high",t:"Placeholder phone link",d:`The footer contains a placeholder phone link: tel:+1234567890.`,f:`Use the real number.`},
+{id:"K2",sev:"med",t:"Email domain mismatch",d:`The contact email is info@silveroakglobal.ae (.ae) on a .com website.`,f:`Align the email domain with the site.`},
+{id:"K3",sev:"med",t:"Three brand TLDs",d:`The brand uses .com, .ae and .in inconsistently across the site.`,f:`Consolidate to one primary domain.`},
+{id:"K4",sev:"med",t:"Footer phone looks placeholder",d:`The footer phone +971 800 555 555 looks like a placeholder (it may be a real toll-free vanity number — verify).`,f:`Verify it's live, or replace it.`},
+{id:"L1",sev:"crit",t:"Web3Forms keys exposed",d:`Two Web3Forms access-key UUIDs and the recipient leads@silveroakglobal.in are hardcoded in the client JS. Anyone can read them and POST directly to api.web3forms.com/submit to inject leads, spam the inbox, or exhaust the quota. Proven with an authorized single test lead (success).`,f:`Rotate both keys, enable hCaptcha + domain restriction, and move submission server-side.`},
+{id:"L2",sev:"crit",t:"Forms bypass the CRM",d:`Form submissions go to Web3Forms (email), not Leadrat — confirmed: the test lead reached Gmail but not the CRM.`,f:`Submit server-side and push to Leadrat there.`},
+{id:"L3",sev:"crit",t:"Recipient field controllable",d:`The attacker-supplied "to" field was accepted and echoed by the API — the recipient may be controllable, enabling lead redirection or use as a spam relay.`,f:`Lock the recipient server-side; never trust a client "to".`},
+{id:"L4",sev:"high",t:"Missing security headers",d:`No Content-Security-Policy, X-Frame-Options (clickjacking), X-Content-Type-Options (nosniff), Referrer-Policy, or Permissions-Policy. (HSTS is present.)`,f:`Add these via next.config.js headers() or Vercel config.`},
+{id:"L5",sev:"high",t:"Public admin login",d:`The CMS admin login at sop-cms.silveroak.ae ("Login | Real Estate Web") is reachable from any IP.`,f:`Enforce MFA, rate-limiting/lockout, and IP all-listing or VPN.`},
+{id:"L6",sev:"med",t:"Emails harvestable in bundle",d:`Internal emails (marketing@, info@, leads@) are present in the client JS bundle — easy phishing/spam targets.`,f:`Avoid shipping internal emails to the client.`},
+{id:"L7",sev:"med",t:"Stack disclosed via headers",d:`Headers reveal the stack: x-powered-by: Next.js, server: Vercel, x-matched-path, x-nextjs-prerender.`,f:`Strip x-powered-by and unnecessary x-* headers.`},
+{id:"L8",sev:"low",t:"Placeholder data in production",d:`Sample values shipped to production: email@example.com, john@gmail.com, and tel:+1234567890.`,f:`Clean up sample/placeholder data.`}
+];
+
+const FM=Object.fromEntries(F.map(x=>[x.id,x]));
+const active=new Set(["crit","high","med","low"]);
+let query="";
+
+// build list
+const grid=document.getElementById('grid');
+function render(){
+  grid.innerHTML="";
+  let n=0;
+  F.forEach(x=>{
+    const show=active.has(x.sev) && (x.t+ " "+x.d+" "+x.id+" "+CAT[x.id[0]]).toLowerCase().includes(query);
+    if(!show) return; n++;
+    const el=document.createElement('div');
+    el.className="f-card"; el.dataset.sev=x.sev; el.dataset.fid=x.id;
+    el.innerHTML=`<div class="strip"></div><div class="top"><span class="id">${x.id}</span><span class="badge ${x.sev}">${SEVN[x.sev]}</span><span class="cat">${CAT[x.id[0]]}</span></div><h4>${x.t}</h4><p>${x.d.length>120?x.d.slice(0,118)+'…':x.d}</p>`;
+    el.onclick=()=>openD(x.id);
+    grid.appendChild(el);
+  });
+  document.getElementById('empty').style.display=n?"none":"block";
+  // markers
+  document.querySelectorAll('.marker').forEach(m=>{
+    const x=FM[m.dataset.fid];
+    m.classList.toggle('hide', !(x && active.has(x.sev) && (x.t+" "+x.d).toLowerCase().includes(query)));
+  });
+}
+// drawer
+const scrim=document.getElementById('scrim'),drawer=document.getElementById('drawer');
+function openD(id){
+  const x=FM[id]; if(!x)return;
+  document.getElementById('dId').textContent=id+" · "+CAT[id[0]];
+  document.getElementById('dTitle').textContent=x.t;
+  document.getElementById('dMeta').innerHTML=`<span class="badge ${x.sev}">${SEVN[x.sev]}</span>`;
+  document.getElementById('dDesc').textContent=x.d;
+  document.getElementById('dFix').textContent=x.f;
+  scrim.classList.add('open');drawer.classList.add('open');
+}
+function closeD(){scrim.classList.remove('open');drawer.classList.remove('open');}
+scrim.onclick=closeD;document.getElementById('closeD').onclick=closeD;
+document.addEventListener('keydown',e=>{if(e.key==="Escape")closeD();});
+document.querySelectorAll('.marker').forEach(m=>m.onclick=()=>openD(m.dataset.fid));
+
+// filters
+document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+  const s=c.dataset.s;
+  if(active.has(s)&&active.size>0){active.delete(s);c.classList.remove('on');}else{active.add(s);c.classList.add('on');}
+  document.querySelectorAll('.stat').forEach(st=>st.classList.toggle('off',!active.has(st.dataset.s)));
+  render();
+});
+document.querySelectorAll('.stat').forEach(st=>st.onclick=()=>{
+  active.clear();active.add(st.dataset.s);
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.s===st.dataset.s));
+  document.querySelectorAll('.stat').forEach(s=>s.classList.toggle('off',s!==st));
+  render();window.scrollTo({top:document.querySelector('.scenes').offsetTop-80,behavior:'smooth'});
+});
+document.getElementById('q').oninput=e=>{query=e.target.value.toLowerCase().trim();render();};
+
+// count-up (derive severity totals from data so they always match)
+document.getElementById('total').textContent=F.length;
+(function(){const c={crit:0,high:0,med:0,low:0};F.forEach(x=>c[x.sev]++);document.querySelectorAll('.stat').forEach(st=>{st.querySelector('.n').dataset.c=c[st.dataset.s];});})();
+function countUp(el){const t=+el.dataset.c;let i=0;const step=Math.max(1,Math.round(t/28));const iv=setInterval(()=>{i+=step;if(i>=t){i=t;clearInterval(iv);}el.textContent=i;},26);}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){countUp(e.target);io.unobserve(e.target);}}),{threshold:.5});
+document.querySelectorAll('.stat .n').forEach(n=>io.observe(n));
+
+render();
+</script>
+</body>
+</html>

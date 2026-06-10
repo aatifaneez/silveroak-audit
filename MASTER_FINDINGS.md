@@ -5,7 +5,7 @@
 `[reported]` Aatif's visual find · `[PoC]` actively proven · `[observed]` seen in screenshots
 **Severity:** 🔴 Critical · 🟠 High · 🟡 Medium · 🔵 Low
 
-**Totals:** ~100 distinct issues — 🔴 14 · 🟠 31 · 🟡 38 · 🔵 17 (+ confirmed-good list at end)
+**Totals:** 88 distinct issues — 🔴 12 · 🟠 24 · 🟡 39 · 🔵 13 (+ confirmed-good list at end)
 
 ---
 
