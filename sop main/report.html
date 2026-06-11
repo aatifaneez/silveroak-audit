@@ -3,91 +3,104 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Silver Oak — Audit Case File</title>
+<title>Silver Oak — Website Audit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Libre+Franklin:wght@300;400;500;600;700;800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:wght@500;600&family=Courier+Prime&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#efe9dc; --paper-2:#e7dfce; --card:#f6f1e6; --ink:#1c1a15; --ink-soft:#5b554a;
-  --rule:#c9bfa8; --red:#c1271a; --redink:#a8231a;
-  --crit:#c1271a; --high:#b06a1c; --med:#8a7322; --low:#436173;
+  --bg:#faf8f4; --panel:#ffffff; --panel-2:#f4f2ec;
+  --ink:#1b1c1e; --muted:#787569; --faint:#a8a496; --line:#e7e3da; --line-2:#efece4;
+  --navy:#0d2034; --gold:#b1853e;
+  --crit:#c5362c; --high:#cf7c2a; --med:#a98e2b; --low:#3f7895;
+  --serif:'Fraunces',Georgia,serif; --sans:'Inter Tight',system-ui,-apple-system,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sh:0 1px 2px rgba(24,22,18,.05), 0 14px 34px -18px rgba(24,22,18,.18);
+  --sh-sm:0 1px 2px rgba(24,22,18,.06);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:'Libre Franklin',sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:-2;background:
-  radial-gradient(1200px 800px at 90% -10%, #f3eee2, transparent 60%),
-  radial-gradient(900px 700px at -10% 100%, #e6ddc9, transparent 55%), var(--paper);}
-body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.05;mix-blend-mode:multiply;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
-.wrap{max-width:1080px;margin:0 auto;padding:0 30px}
-a{color:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(1100px 520px at 88% -8%, #fff, transparent 60%),
+  radial-gradient(900px 600px at -6% 102%, #f1eee5, transparent 55%);}
+.wrap{max-width:1060px;margin:0 auto;padding:0 32px}
+::selection{background:var(--navy);color:#fff}
 
-.cover{padding:52px 0 24px;border-bottom:3px double var(--ink);position:relative}
-.filebar{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:'Courier Prime',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
-.filebar b{color:var(--ink)}
-.cover h1{font-family:'Newsreader',serif;font-weight:400;font-size:clamp(42px,8vw,92px);line-height:.95;letter-spacing:-.015em;margin:26px 0 6px}
-.cover h1 em{font-style:italic;text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:8px;text-decoration-thickness:2px}
-.cover .lede{font-family:'Newsreader',serif;font-size:20px;font-style:italic;color:var(--ink-soft);max-width:600px;margin-top:8px}
-.stamp{position:absolute;top:46px;right:18px;transform:rotate(-11deg);border:3px solid var(--red);color:var(--red);border-radius:8px;padding:8px 16px 6px;text-align:center;font-family:'Courier Prime',monospace;opacity:.88;box-shadow:inset 0 0 0 1px var(--red)}
-.stamp .big{font-size:34px;font-weight:700;line-height:1}
-.stamp .small{font-size:10px;letter-spacing:.22em}
+/* ---------- masthead ---------- */
+.cover{padding:64px 0 38px}
+.brandline{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.brandline .mk{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px rgba(177,133,62,.16)}
+.cover h1{font-family:var(--serif);font-weight:560;font-size:clamp(40px,7.2vw,82px);line-height:.98;letter-spacing:-.02em;margin:22px 0 0;max-width:14ch}
+.cover h1 em{font-style:italic;color:var(--navy)}
+.cover .lede{font-size:18px;color:var(--muted);max-width:560px;margin:18px 0 0}
+.cover .lede b{color:var(--ink);font-weight:600}
 
-.tally{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink);margin:30px 0 6px;background:var(--card)}
-.tally .t{padding:16px 18px;border-right:1px solid var(--rule);cursor:pointer;transition:background .15s}
-.tally .t:last-child{border-right:0}
-.tally .t:hover{background:#efe7d4}
-.tally .t .num{font-family:'Newsreader',serif;font-size:46px;line-height:1;font-weight:500}
-.tally .t .lab{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px;display:flex;align-items:center;gap:7px}
-.tally .t .lab .dot{width:10px;height:10px;border-radius:2px}
+/* stat band */
+.statband{margin-top:40px;background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh);display:grid;grid-template-columns:1.3fr repeat(4,1fr);overflow:hidden}
+.statband .total{padding:22px 24px;background:var(--navy);color:#fff;display:flex;flex-direction:column;justify-content:center}
+.statband .total .n{font-family:var(--serif);font-size:54px;line-height:1;font-weight:600}
+.statband .total .l{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#aebfd0;margin-top:8px}
+.tally{display:contents}
+.tally .t{padding:22px 22px;border-left:1px solid var(--line-2);cursor:pointer;transition:background .18s}
+.tally .t:hover{background:var(--panel-2)}
+.tally .t .num{font-family:var(--serif);font-size:40px;line-height:1;font-weight:560}
+.tally .t .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:9px;display:flex;align-items:center;gap:7px}
+.tally .t .lab .dot{width:9px;height:9px;border-radius:50%}
 .tally .t[data-s=crit] .num{color:var(--crit)} .tally .t[data-s=crit] .dot{background:var(--crit)}
 .tally .t[data-s=high] .num{color:var(--high)} .tally .t[data-s=high] .dot{background:var(--high)}
 .tally .t[data-s=med] .num{color:var(--med)} .tally .t[data-s=med] .dot{background:var(--med)}
 .tally .t[data-s=low] .num{color:var(--low)} .tally .t[data-s=low] .dot{background:var(--low)}
-.tally .t.off{opacity:.34}
+.tally .t.off{opacity:.38;filter:saturate(.4)}
+.stamp{display:none}
 
-.controls{position:sticky;top:0;z-index:40;background:rgba(239,233,220,.93);backdrop-filter:blur(6px);border-bottom:1px solid var(--ink);padding:11px 0;margin-top:8px}
-.controls .wrap{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
-.controls .lbl{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
-.chip{font-family:'Courier Prime',monospace;font-size:12px;padding:6px 12px;border:1px solid var(--ink);background:transparent;color:var(--ink-soft);cursor:pointer;display:inline-flex;align-items:center;gap:7px;border-radius:2px}
-.chip .sw{width:9px;height:9px;border-radius:2px}
+/* ---------- sticky controls ---------- */
+.controls{position:sticky;top:0;z-index:40;background:rgba(250,248,244,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:11px 0;margin-top:30px}
+.controls .wrap{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.controls .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin-right:4px}
+.chip{font-family:var(--sans);font-size:13px;font-weight:500;padding:7px 13px;border:1px solid var(--line);background:var(--panel);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;gap:8px;border-radius:999px;transition:.15s}
+.chip .sw{width:9px;height:9px;border-radius:50%}
 .chip[data-s=crit] .sw{background:var(--crit)}.chip[data-s=high] .sw{background:var(--high)}.chip[data-s=med] .sw{background:var(--med)}.chip[data-s=low] .sw{background:var(--low)}
-.chip.on{background:var(--ink);color:var(--paper)}
-.search{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--ink);border-radius:2px;padding:5px 12px;background:var(--card)}
-.search input{background:transparent;border:0;color:var(--ink);font-family:'Courier Prime',monospace;font-size:13px;outline:none;width:180px}
+.chip:hover{border-color:var(--faint)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.search{margin-left:auto;display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--panel)}
+.search span{color:var(--faint)}
+.search input{background:transparent;border:0;color:var(--ink);font-family:var(--sans);font-size:14px;outline:none;width:190px}
+.search input::placeholder{color:var(--faint)}
 
-.sec{padding:50px 0 6px}
-.sec-h{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--ink);padding-bottom:10px;margin-bottom:28px}
-.sec-h .no{font-family:'Courier Prime',monospace;font-size:13px;color:var(--red);font-weight:700}
-.sec-h h2{font-family:'Newsreader',serif;font-weight:500;font-size:clamp(26px,4vw,38px);margin:0;font-style:italic}
-.sec-h p{margin-left:auto;font-family:'Courier Prime',monospace;font-size:11.5px;color:var(--ink-soft);max-width:330px;text-align:right}
+/* ---------- sections ---------- */
+.sec{padding:58px 0 4px}
+.sec-h{display:flex;align-items:baseline;gap:16px;margin-bottom:30px}
+.sec-h .no{font-family:var(--mono);font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.04em}
+.sec-h h2{font-family:var(--serif);font-weight:540;font-size:clamp(26px,3.6vw,36px);margin:0;letter-spacing:-.01em}
+.sec-h p{margin-left:auto;font-size:13px;color:var(--muted);max-width:340px;text-align:right}
 
-.plates{display:grid;gap:46px}
-.plate{position:relative}
-.plate .cap{display:flex;align-items:baseline;gap:12px;margin-bottom:10px;flex-wrap:wrap}
-.plate .cap .pno{font-family:'Courier Prime',monospace;font-size:12px;color:var(--red);letter-spacing:.1em;border:1px solid var(--red);padding:2px 8px;border-radius:2px}
-.plate .cap h3{font-family:'Newsreader',serif;font-weight:500;font-size:22px;margin:0}
-.plate .cap .src{margin-left:auto;font-family:'Courier Prime',monospace;font-size:11px;color:var(--ink-soft)}
-.figure{position:relative;border:1px solid var(--ink);background:#0c1e30;box-shadow:6px 8px 0 rgba(28,26,21,.14);overflow:hidden}
+/* ---------- plates ---------- */
+.plates{display:grid;gap:40px}
+.plate .cap{display:flex;align-items:baseline;gap:13px;margin-bottom:13px;flex-wrap:wrap}
+.plate .cap .pno{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--gold);border:1px solid var(--line);background:var(--panel);padding:4px 9px;border-radius:6px}
+.plate .cap h3{font-family:var(--serif);font-weight:560;font-size:21px;margin:0;letter-spacing:-.01em}
+.plate .cap .src{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--faint)}
+.figure{position:relative;border:1px solid var(--line);border-radius:16px;background:var(--navy);box-shadow:var(--sh);overflow:hidden}
 .figure img{display:block;width:100%}
-.ribbon{position:absolute;top:11px;left:-36px;transform:rotate(-45deg);background:var(--red);color:#fff;font-family:'Courier Prime',monospace;font-size:9.5px;letter-spacing:.1em;padding:4px 42px;z-index:8;opacity:.92}
+.ribbon{position:absolute;top:12px;right:12px;z-index:8;background:rgba(255,255,255,.9);color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.04em;padding:5px 10px;border-radius:999px;border:1px solid var(--line)}
 
-.pin{position:absolute;transform:translate(-50%,-50%);z-index:6;cursor:pointer;width:52px;height:52px}
-.pin .ring{position:absolute;inset:0;background:var(--c);-webkit-mask:var(--rough) center/contain no-repeat;mask:var(--rough) center/contain no-repeat}
-.pin .tag{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;padding:0 4px;background:var(--c);color:#fff;font-family:'Courier Prime',monospace;font-weight:700;font-size:12px;border-radius:2px;display:grid;place-items:center;box-shadow:1px 1px 0 rgba(0,0,0,.3)}
+/* modern pin */
+.pin{position:absolute;transform:translate(-50%,-50%);z-index:6;width:28px;height:28px;cursor:pointer;transition:transform .14s}
+.pin .ring{position:absolute;inset:0;border-radius:50%;background:var(--c);border:2.5px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+.pin .tag{position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-family:var(--mono);font-weight:600;font-size:12px}
 .pin[data-sev=crit]{--c:var(--crit)}.pin[data-sev=high]{--c:var(--high)}.pin[data-sev=med]{--c:var(--med)}.pin[data-sev=low]{--c:var(--low)}
-.pin:hover{transform:translate(-50%,-50%) scale(1.12) rotate(-2deg)}
+.pin:hover{transform:translate(-50%,-50%) scale(1.18)}
+.pin:hover .ring{box-shadow:0 0 0 6px color-mix(in srgb, var(--c) 22%, transparent),0 3px 8px rgba(0,0,0,.4)}
 .pin.hide{display:none}
-.pin .ring{--rough:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M52 9 C80 7 95 30 91 53 C88 80 64 95 42 91 C16 87 6 62 11 41 C15 22 31 11 53 10 C72 9 86 26 87 47' fill='none' stroke='%23000' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E")}
 
-.mock{font-family:'Libre Franklin',sans-serif}
+/* recreation mockups (site UI, reproduced) */
+.mock{font-family:var(--sans)}
 .m-hero{height:300px;position:relative}
 .m-nav{height:78px;display:flex;align-items:center;gap:20px;padding:0 22px;color:#dfe7ee;font-size:12.5px;background:#0c1e30;flex-wrap:wrap}
-.m-logo b{font-family:'Newsreader',serif;color:#e3b277;font-size:13px;display:block;line-height:1}.m-logo small{font-size:7px;letter-spacing:.16em;color:#9fb0c0}
+.m-logo b{font-family:var(--serif);color:#e3b277;font-size:13px;display:block;line-height:1}.m-logo small{font-size:7px;letter-spacing:.16em;color:#9fb0c0}
 .m-grey{position:absolute;inset:78px 0 0;display:grid;place-items:center;background:repeating-linear-gradient(45deg,#b4bec8,#b4bec8 16px,#aeb8c2 16px,#aeb8c2 32px)}
-.m-grey .ghost{font-family:'Newsreader',serif;font-weight:600;font-size:30px;color:#4d6076;filter:blur(2.2px);text-align:center}
-.m-grey .note{position:absolute;bottom:12px;font-family:'Courier Prime',monospace;font-size:10.5px;color:#56697f}
+.m-grey .ghost{font-family:var(--serif);font-weight:600;font-size:30px;color:#4d6076;filter:blur(2.2px);text-align:center}
+.m-grey .note{position:absolute;bottom:12px;font-family:var(--mono);font-size:10.5px;color:#56697f}
 .m-search{display:grid;grid-template-columns:1fr 1fr 1fr 120px;background:#0c1e30;color:#cdd8e2}
 .m-search .f{padding:15px 16px;border-right:1px solid rgba(255,255,255,.08)}
 .m-search .f label{font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#9fb0c0;display:block;margin-bottom:6px}
@@ -95,101 +108,110 @@ a{color:inherit}
 .m-search .btn{background:#c28641;color:#1a1205;display:grid;place-items:center;font-weight:700;letter-spacing:.2em;font-size:12px;left:5px;position:relative}
 .m-card{width:280px;background:#0f2336;border:1px solid rgba(255,255,255,.07);margin:16px auto}
 .m-card .img{height:140px;background:linear-gradient(120deg,#2a4763,#16314a);display:grid;place-items:center;color:#7e98b1;font-size:30px}.m-card .img span{transform:scaleX(2.1);opacity:.6}
-.m-card .body{padding:13px}.m-card .ttl{font-family:'Newsreader',serif;color:#e3b277;font-size:15px}.m-card .price{font-family:'Courier Prime',monospace;font-size:17px;color:#fff;margin:5px 0}.m-card .loc{color:#8ea6bd;font-size:12px}
+.m-card .body{padding:13px}.m-card .ttl{font-family:var(--serif);color:#e3b277;font-size:15px}.m-card .price{font-family:var(--mono);font-size:17px;color:#fff;margin:5px 0}.m-card .loc{color:#8ea6bd;font-size:12px}
 .m-card .acts{display:flex;gap:7px;margin-top:11px}.m-card .acts b{flex:1;text-align:center;font-size:10.5px;padding:6px 0;background:rgba(194,134,65,.16);color:#e3b277;font-weight:500}
 .m-detail{display:flex;gap:22px;flex-wrap:wrap;padding:22px;background:#0f2336}
-.m-detail .lab{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8ea6bd}.m-detail .big{font-family:'Courier Prime',monospace;font-size:23px;color:#fff;margin-top:5px}
+.m-detail .lab{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:#8ea6bd}.m-detail .big{font-family:var(--mono);font-size:23px;color:#fff;margin-top:5px}
 .m-detail .cur{display:inline-flex;gap:4px;margin-top:8px}.m-detail .cur b{font-size:10px;padding:3px 7px;background:rgba(255,255,255,.07);color:#9fb0c0}.m-detail .cur b.on{background:#c28641;color:#1a1205}
 .m-detail .sub{color:#8ea6bd;font-size:12px;margin-top:4px;font-style:italic}
 .m-calc{padding:22px;background:#0f2336;display:grid;gap:14px;max-width:430px}
 .m-calc .row{display:flex;align-items:center;justify-content:space-between;border:1px solid rgba(255,255,255,.1);padding:11px 13px}
-.m-calc .lab{font-size:12px;color:#9fb0c0}.m-calc .stepper{display:flex;align-items:center;gap:11px}.m-calc .stepper b{font-family:'Courier Prime',monospace;color:#fff;font-size:14px}
+.m-calc .lab{font-size:12px;color:#9fb0c0}.m-calc .stepper{display:flex;align-items:center;gap:11px}.m-calc .stepper b{font-family:var(--mono);color:#fff;font-size:14px}
 .m-calc .stepper button{width:24px;height:24px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#cdd8e2}.m-calc .arrow{color:#e3b277;font-size:15px}
 .m-form{padding:22px;background:#0f2336;display:grid;gap:11px;max-width:460px}
-.m-form input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:10px 12px;color:#e9eef4;font-family:'Libre Franklin';font-size:13px}
+.m-form input{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:10px 12px;color:#e9eef4;font-family:var(--sans);font-size:13px}
 .m-form .ph{display:grid;grid-template-columns:74px 1fr;gap:7px}.m-form .cc{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:0 9px;font-size:12.5px;color:#cdd8e2}
 .m-form .submit{background:#c28641;color:#1a1205;text-align:center;font-weight:700;padding:11px;font-size:12.5px}
-.m-form .leak{font-family:'Courier Prime',monospace;font-size:10px;color:#6f86a0;border-top:1px dashed rgba(255,255,255,.12);padding-top:9px}.m-form .leak b{color:#ff7a6e}
+.m-form .leak{font-family:var(--mono);font-size:10px;color:#6f86a0;border-top:1px dashed rgba(255,255,255,.12);padding-top:9px}.m-form .leak b{color:#ff7a6e}
 .m-footer{background:#0a1a2b;padding:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px}
-.m-footer .col b{font-family:'Courier Prime',monospace;color:#cdd8e2;font-size:12px}.m-footer .col div{color:#8ea6bd;font-size:11.5px;margin-top:5px}
+.m-footer .col b{font-family:var(--mono);color:#cdd8e2;font-size:12px}.m-footer .col div{color:#8ea6bd;font-size:11.5px;margin-top:5px}
 .m-footer .socials{display:flex;gap:9px}.m-footer .socials i{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;font-style:normal;color:#9fb0c0;font-size:11px}
 .m-chat{padding:22px;background:#0f2336;display:flex;justify-content:flex-end}
 .m-chatw{width:270px;border:1px solid rgba(255,255,255,.1)}
 .m-chatw .hd{background:#c28641;color:#1a1205;padding:11px 13px;display:flex;align-items:center;gap:9px}.m-chatw .hd .av{width:28px;height:28px;border-radius:50%;background:rgba(0,0,0,.18);display:grid;place-items:center;font-size:13px}.m-chatw .hd b{font-size:12.5px}.m-chatw .hd .d3{margin-left:auto}
-.m-chatw .bd{background:#0c1c2e;padding:18px 13px;min-height:84px;display:grid;place-items:center}.m-chatw .bd .un{font-size:11.5px;color:#ff7a6e;font-family:'Courier Prime',monospace;border:1px solid rgba(255,122,110,.4);padding:5px 9px}
+.m-chatw .bd{background:#0c1c2e;padding:18px 13px;min-height:84px;display:grid;place-items:center}.m-chatw .bd .un{font-size:11.5px;color:#ff7a6e;font-family:var(--mono);border:1px solid rgba(255,122,110,.4);padding:5px 9px}
+.plate>p{font-family:var(--mono)!important;font-size:11.5px;color:var(--muted);margin:10px 0 0}
 
-.ledger{border:1px solid var(--ink)}
-.lrow{display:grid;grid-template-columns:64px 90px 1fr;gap:14px;align-items:baseline;padding:14px 16px;border-bottom:1px solid var(--rule);cursor:pointer;background:var(--card);transition:background .12s}
-.lrow:last-child{border-bottom:0}
-.lrow:hover{background:#efe7d4}
-.lrow .lid{font-family:'Courier Prime',monospace;font-weight:700;font-size:14px}
-.lrow .lsev{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:2px;justify-self:start;color:#fff}
-.lrow[data-sev=crit] .lsev{background:var(--crit)}.lrow[data-sev=high] .lsev{background:var(--high)}.lrow[data-sev=med] .lsev{background:var(--med)}.lrow[data-sev=low] .lsev{background:var(--low)}
-.lrow[data-sev=crit] .lid{color:var(--crit)}
-.lrow h4{margin:0 0 3px;font-size:16px;font-weight:600;font-family:'Libre Franklin'}
-.lrow .ld{margin:0;color:var(--ink-soft);font-size:13.5px}
-.lrow .lcat{font-family:'Courier Prime',monospace;font-size:10px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.08em;margin-top:5px}
+/* ---------- ledger ---------- */
+.ledger{display:grid;gap:10px}
+.lrow{display:grid;grid-template-columns:54px 86px 1fr;gap:16px;align-items:center;padding:16px 18px;background:var(--panel);border:1px solid var(--line);border-radius:13px;cursor:pointer;box-shadow:var(--sh-sm);transition:.15s;position:relative;overflow:hidden}
+.lrow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+.lrow[data-sev=crit]{--c:var(--crit)}.lrow[data-sev=high]{--c:var(--high)}.lrow[data-sev=med]{--c:var(--med)}.lrow[data-sev=low]{--c:var(--low)}
+.lrow:hover{transform:translateY(-2px);border-color:var(--faint);box-shadow:var(--sh)}
+.lrow .lid{font-family:var(--mono);font-weight:600;font-size:14px;color:var(--ink)}
+.lrow .lsev{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border-radius:999px;justify-self:start;color:#fff;background:var(--c)}
+.lrow h4{margin:0 0 3px;font-size:16px;font-weight:600}
+.lrow .ld{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.lrow .lcat{font-family:var(--mono);font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
 .lrow.hide{display:none}
 
-.scrim{position:fixed;inset:0;background:rgba(28,26,21,.42);opacity:0;pointer-events:none;transition:.22s;z-index:90}
+/* ---------- drawer ---------- */
+.scrim{position:fixed;inset:0;background:rgba(24,22,18,.4);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.22s;z-index:90}
 .scrim.open{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;height:100%;width:min(440px,92vw);background:var(--card);border-left:2px solid var(--ink);box-shadow:-12px 0 0 rgba(28,26,21,.1);z-index:100;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.1,1);padding:28px 30px;overflow-y:auto}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(450px,93vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:-30px 0 60px -20px rgba(24,22,18,.3);z-index:100;transform:translateX(100%);transition:transform .32s cubic-bezier(.4,0,.1,1);padding:30px 32px;overflow-y:auto}
 .drawer.open{transform:none}
-.drawer .x{position:absolute;top:16px;right:18px;background:none;border:1px solid var(--ink);width:32px;height:32px;cursor:pointer;font-size:15px;border-radius:2px}
-.drawer .did{font-family:'Courier Prime',monospace;color:var(--red);font-size:13px;letter-spacing:.08em}
-.drawer h3{font-family:'Newsreader',serif;font-weight:500;font-size:27px;margin:10px 0 14px;line-height:1.15}
-.drawer .meta{display:flex;gap:8px;margin-bottom:22px}
-.drawer .blk{margin-bottom:20px}
-.drawer .blk .h{font-family:'Courier Prime',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:6px}
-.drawer .blk p{margin:0;font-size:15px}
-.drawer .fix{border-left:3px solid var(--red);padding-left:13px}
-.drawer .fix p{font-style:italic}
-.badge{font-family:'Courier Prime',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:2px;color:#fff}
+.drawer .x{position:absolute;top:18px;right:20px;background:var(--panel-2);border:1px solid var(--line);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:14px;color:var(--muted)}
+.drawer .did{font-family:var(--mono);color:var(--gold);font-size:12.5px;letter-spacing:.06em}
+.drawer h3{font-family:var(--serif);font-weight:560;font-size:28px;margin:12px 0 16px;line-height:1.12;letter-spacing:-.01em}
+.drawer .meta{display:flex;gap:8px;margin-bottom:24px}
+.drawer .blk{margin-bottom:22px}
+.drawer .blk .h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:8px}
+.drawer .blk p{margin:0;font-size:15px;line-height:1.6}
+.drawer .fix{background:var(--panel-2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;padding:14px 16px}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:999px;color:#fff}
 .badge.crit{background:var(--crit)}.badge.high{background:var(--high)}.badge.med{background:var(--med)}.badge.low{background:var(--low)}
 
-footer.foot{padding:54px 0 46px;border-top:3px double var(--ink);margin-top:48px;font-family:'Courier Prime',monospace;font-size:12px;color:var(--ink-soft);text-align:center}
-footer.foot b{color:var(--ink)}
-.reveal{opacity:0;transform:translateY(14px);animation:rise .6s forwards}@keyframes rise{to{opacity:1;transform:none}}
-@media(max-width:720px){.tally{grid-template-columns:repeat(2,1fr)}.m-search{grid-template-columns:1fr 1fr}.sec-h p,.plate .cap .src{display:none}.lrow{grid-template-columns:54px 1fr}.lrow .lsev{display:none}.search{width:100%;margin:6px 0 0}.stamp{display:none}}
+footer.foot{padding:56px 0 50px;border-top:1px solid var(--line);margin-top:54px;font-family:var(--mono);font-size:12px;color:var(--faint);text-align:center;line-height:1.9}
+footer.foot b{color:var(--muted);font-weight:500}
+
+.reveal{opacity:0;transform:translateY(16px);animation:rise .6s cubic-bezier(.2,.7,.3,1) forwards}@keyframes rise{to{opacity:1;transform:none}}
+@media(max-width:760px){
+  .statband{grid-template-columns:1fr 1fr}.statband .total{grid-column:1/-1}
+  .tally .t{border-top:1px solid var(--line-2)}
+  .m-search{grid-template-columns:1fr 1fr}.sec-h p,.plate .cap .src{display:none}
+  .lrow{grid-template-columns:46px 1fr}.lrow .lsev{display:none}.search{width:100%;margin:6px 0 0}
+}
 </style>
 </head>
 <body>
 
 <header class="cover"><div class="wrap">
-  <div class="filebar reveal"><span>Case File · <b>SOP-001</b></span><span>Subject: <b>silveroakglobal.com</b></span><span>Opened <b>09 JUN 2026</b></span></div>
-  <h1 class="reveal" style="animation-delay:.05s">A field audit of<br>the <em>Silver Oak</em> website</h1>
-  <p class="lede reveal" style="animation-delay:.12s">Every issue is circled on the page where it appears — in red pen. Click a circle, or any line in the ledger, to read the note and the fix.</p>
-  <div class="stamp reveal" style="animation-delay:.2s"><div class="big" id="stampN">88</div><div class="small">FINDINGS</div></div>
-  <div class="tally">
-    <div class="t" data-s="crit"><div class="num" data-c="12">0</div><div class="lab"><span class="dot"></span>Critical</div></div>
-    <div class="t" data-s="high"><div class="num" data-c="24">0</div><div class="lab"><span class="dot"></span>High</div></div>
-    <div class="t" data-s="med"><div class="num" data-c="39">0</div><div class="lab"><span class="dot"></span>Medium</div></div>
-    <div class="t" data-s="low"><div class="num" data-c="13">0</div><div class="lab"><span class="dot"></span>Low</div></div>
+  <div class="brandline reveal"><span class="mk"></span>Website Audit · silveroakglobal.com · 09 Jun 2026</div>
+  <h1 class="reveal" style="animation-delay:.05s">The Silver Oak <em>website audit</em></h1>
+  <p class="lede reveal" style="animation-delay:.12s">Every finding is pinned to the place it appears on the page. <b>Click a marker</b> — or any row in the list — to read the issue and the recommended fix.</p>
+  <div class="statband reveal" style="animation-delay:.18s">
+    <div class="total"><div class="n" id="stampN">93</div><div class="l">Findings</div></div>
+    <div class="tally">
+      <div class="t" data-s="crit"><div class="num" data-c="12">0</div><div class="lab"><span class="dot"></span>Critical</div></div>
+      <div class="t" data-s="high"><div class="num" data-c="24">0</div><div class="lab"><span class="dot"></span>High</div></div>
+      <div class="t" data-s="med"><div class="num" data-c="39">0</div><div class="lab"><span class="dot"></span>Medium</div></div>
+      <div class="t" data-s="low"><div class="num" data-c="13">0</div><div class="lab"><span class="dot"></span>Low</div></div>
+    </div>
   </div>
 </div></header>
 
 <div class="controls"><div class="wrap">
-  <span class="lbl">Show</span>
+  <span class="lbl">Filter</span>
   <button class="chip on" data-s="crit"><span class="sw"></span>Critical</button>
   <button class="chip on" data-s="high"><span class="sw"></span>High</button>
   <button class="chip on" data-s="med"><span class="sw"></span>Medium</button>
   <button class="chip on" data-s="low"><span class="sw"></span>Low</button>
-  <div class="search"><span>⌕</span><input id="q" placeholder="search the file…"></div>
+  <div class="search"><span>⌕</span><input id="q" placeholder="search findings…"></div>
 </div></div>
 
 <section class="sec"><div class="wrap">
-  <div class="sec-h reveal"><span class="no">I.</span><h2>The exhibits</h2><p>Pages from the site, marked up. Red = critical, amber = high, ochre = medium, slate = low.</p></div>
+  <div class="sec-h reveal"><span class="no">01</span><h2>Annotated exhibits</h2><p>Pages from the site, marked up. Marker colour follows severity.</p></div>
   <div class="plates">
 
   <div class="plate"><div class="cap"><span class="pno">EXHIBIT A</span><h3>Live capture · full homepage</h3><span class="src">real screenshot · silveroakglobal.com/</span></div>
     <div class="figure" style="background:#fff;max-height:560px;overflow:auto">
       <img src="assets/soa-home.jpg" alt="Full homepage screenshot of silveroakglobal.com" style="display:block;width:100%">
     </div>
-    <p style="font-family:'Courier Prime',monospace;font-size:11.5px;color:var(--ink-soft);margin:8px 0 0">Actual rendered homepage (scroll within the frame). The plates below recreate each region so the markers sit precisely on the element in question.</p>
+    <p>Actual rendered homepage (scroll within the frame). The plates below recreate each region so the markers sit precisely on the element in question.</p>
   </div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 1</span><h3>Homepage hero</h3><span class="src">silveroakglobal.com/</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-hero">
         <div class="m-nav"><div class="m-logo"><b>SILVER OAK</b><small>PROPERTIES</small></div><span>Properties ▾</span><span>Events</span><span>Developers</span><span>Area Guides</span><span>Blogs</span><span>Who We Are ▾</span></div>
         <div class="m-grey"><div class="ghost">Invest in Dubai Real Estate With Experts</div><div class="note">▶ 7.3 MB video · no poster · blank for 6s+</div></div>
@@ -202,7 +224,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 2</span><h3>Hero search bar</h3><span class="src">silveroakglobal.com/</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-search"><div class="f"><label>Property Type</label><div class="v">Select an option ▾</div></div><div class="f"><label>Locations</label><div class="v">Select a location ▾</div></div><div class="f"><label>Starting Price</label><div class="v">500000</div></div><div class="btn">SEARCH</div></div>
       <div class="pin" data-sev=high data-fid="B2" style="top:50%;left:14%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=high data-fid="B1" style="top:50%;left:46%"><div class="ring"></div><div class="tag">2</div></div>
@@ -212,7 +234,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 3</span><h3>Property card</h3><span class="src">/offplan-properties</span></div>
-    <div class="figure mock" style="background:#0a1726"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock" style="background:#0a1726"><div class="ribbon">recreation</div>
       <div class="m-card"><div class="img"><span>🏢</span></div><div class="body"><div class="ttl">Bayz 101 by Danube</div><div class="price">AED 1,175,000</div><div class="loc">Business Bay</div><div class="acts"><b>Call</b><b>Email</b><b>WhatsApp</b></div></div></div>
       <div class="pin" data-sev=high data-fid="C1" style="top:24%;left:50%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=med data-fid="I1" style="top:52%;left:36%"><div class="ring"></div><div class="tag">2</div></div>
@@ -221,7 +243,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 4</span><h3>Detail page stats</h3><span class="src">/offplan-properties/bayz-101-by-danube</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-detail"><div><div class="lab">Starting from</div><div class="big">1,175,000</div><div class="cur"><b class="on">AED</b><b>USD</b><b>INR</b></div></div><div><div class="lab">ROI</div><div class="big">7-10%</div><div class="sub">"ROI up to 7-10% in Returns"</div></div><div><div class="lab">Handover</div><div class="big">Q2 2028</div></div></div>
       <div class="pin" data-sev=med data-fid="I1" style="top:38%;left:12%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=med data-fid="D7" style="top:74%;left:12%"><div class="ring"></div><div class="tag">2</div></div>
@@ -229,7 +251,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 5</span><h3>Mortgage calculator</h3><span class="src">/mortgage</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-calc"><div class="row"><div class="lab">Property Price</div><div class="stepper"><b>1,175,000</b><span class="arrow">⌄</span></div></div><div class="row"><div class="lab">Interest Rate</div><div class="stepper"><button>−</button><b>4.0%</b><button>+</button><span class="arrow">⌄</span></div></div><div class="row"><div class="lab">Monthly payment</div><div class="stepper"><b>AED 5,420</b></div></div></div>
       <div class="pin" data-sev=high data-fid="F2" style="top:50%;left:60%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=high data-fid="F3" style="top:50%;left:48%"><div class="ring"></div><div class="tag">2</div></div>
@@ -239,7 +261,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 6</span><h3>Lead form &amp; pipeline</h3><span class="src">contact form → api.web3forms.com</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-form"><input placeholder="First name"><input placeholder="Email address"><div class="ph"><div class="cc">🇦🇪 +971 ▾</div><input placeholder="Phone number"></div><div class="submit">Submit Details</div><div class="leak">// POST api.web3forms.com/submit · access_key:"e2df016a…" · to:"leads@silveroakglobal.in" → <b>email, not Leadrat</b></div></div>
       <div class="pin" data-sev=high data-fid="G1" style="top:50%;left:60%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=med data-fid="G3" style="top:50%;left:16%"><div class="ring"></div><div class="tag">2</div></div>
@@ -248,7 +270,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 7</span><h3>Chat widget</h3><span class="src">Tidio · all pages</span></div>
-    <div class="figure mock m-chat"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock m-chat"><div class="ribbon">recreation</div>
       <div class="m-chatw"><div class="hd"><div class="av">💬</div><b>Hi there 👋</b><span class="d3">⋮</span></div><div class="bd"><div class="un">⚠ Chat is currently unavailable</div></div></div>
       <div class="pin" data-sev=med data-fid="J4" style="top:26%;left:44%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=med data-fid="J5" style="top:26%;left:86%"><div class="ring"></div><div class="tag">2</div></div>
@@ -257,7 +279,7 @@ footer.foot b{color:var(--ink)}
     </div></div>
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 8</span><h3>Footer &amp; brand</h3><span class="src">site footer</span></div>
-    <div class="figure mock"><div class="ribbon">RECREATION · live capture pending</div>
+    <div class="figure mock"><div class="ribbon">recreation</div>
       <div class="m-footer"><div class="col"><b>Office</b><div>The Bay Gate Tower, Business Bay</div><div>Contact: +971 800 555 555</div><div>tel:+1234567890 · info@silveroakglobal.ae</div></div><div class="socials"><i>f</i><i>◎</i><i>▶</i><i>𝕏</i><i>in</i></div></div>
       <div class="pin" data-sev=high data-fid="K1" style="top:80%;left:17%"><div class="ring"></div><div class="tag">1</div></div>
       <div class="pin" data-sev=med data-fid="K2" style="top:80%;left:40%"><div class="ring"></div><div class="tag">2</div></div>
@@ -266,7 +288,7 @@ footer.foot b{color:var(--ink)}
 
   <div class="plate"><div class="cap"><span class="pno">PLATE 9</span><h3>Mobile · homepage (390&nbsp;px)</h3><span class="src">true 390px render via iframe</span></div>
     <div class="figure" style="background:#16263a;display:flex;justify-content:center;padding:22px 0">
-      <div style="width:300px;background:#0c1e30;border:1px solid rgba(255,255,255,.14);overflow:hidden;border-radius:6px">
+      <div style="width:300px;background:#0c1e30;border:1px solid rgba(255,255,255,.14);overflow:hidden;border-radius:12px;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 11px;background:#fff">
           <div style="font-family:'Newsreader',serif;color:#c28641;font-size:9px;line-height:1.05">SILVER&nbsp;OAK<br><span style="font-size:5px;letter-spacing:.12em;color:#9a7d2e">PROPERTIES</span></div>
           <div style="display:flex;gap:11px;align-items:center;color:#1c3350"><span style="font-size:11px">&#127462;&#127466;</span><span style="font-size:17px">&#9776;</span></div>
@@ -293,12 +315,12 @@ footer.foot b{color:var(--ink)}
 </div></section>
 
 <section class="sec"><div class="wrap">
-  <div class="sec-h reveal"><span class="no">II.</span><h2>The full ledger</h2><p>All findings. Filter above; click a row for the note &amp; fix.</p></div>
+  <div class="sec-h reveal"><span class="no">02</span><h2>All findings</h2><p>Filter above; click a row for the issue &amp; the fix.</p></div>
   <div class="ledger" id="ledger"></div>
-  <p id="empty" style="display:none;text-align:center;padding:26px;font-family:'Courier Prime';color:var(--ink-soft)">No entries match.</p>
+  <p id="empty" style="display:none;text-align:center;padding:30px;font-family:var(--mono);color:var(--muted)">No entries match.</p>
 </div></section>
 
-<footer class="foot"><div class="wrap">Silver Oak — audit case file · prepared by Claude · 09 Jun 2026<br>Companion docs: <b>MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW</b></div></footer>
+<footer class="foot"><div class="wrap">Silver Oak — website audit · prepared by Claude · 09 Jun 2026<br>Companion docs: <b>MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW</b></div></footer>
 
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer">
@@ -306,7 +328,7 @@ footer.foot b{color:var(--ink)}
   <div class="did" id="dId"></div><h3 id="dTitle"></h3>
   <div class="meta" id="dMeta"></div>
   <div class="blk"><div class="h">The problem</div><p id="dDesc"></p></div>
-  <div class="blk fix"><div class="h">The fix</div><p id="dFix"></p></div>
+  <div class="blk"><div class="h">The fix</div><div class="fix"><p id="dFix"></p></div></div>
 </aside>
 
 <script>
