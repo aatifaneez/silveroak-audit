@@ -76,6 +76,12 @@ These are unmodified full-page captures of the live site. In the interactive rep
 | A10 | 🟡 | Language/flag selector renders blank then pops in (layout shift). |
 | A11–A12 | 🔵 | No loading skeleton; heavy video used where CSS would do. |
 
+**▸ Compare — Hero & search bar.** On a good site the search bar *is* the hero: real HTML text, a Buy/Rent toggle, one clear CTA, no heavy video. Reference: [Property Finder](https://www.propertyfinder.ae/).
+
+| ❌ Silver Oak (the problem) | ✅ Best-in-class — Property Finder |
+|---|---|
+| ![Silver Oak hero](assets/ours-hero.jpg) | ![Property Finder hero](assets/ref-pf-hero.jpg) |
+
 ### B. Search & filtering
 | # | Sev | Issue |
 |---|---|---|
@@ -87,6 +93,12 @@ These are unmodified full-page captures of the live site. In the interactive rep
 | B6 | 🟡 | Gold SEARCH button overflows the page width (clipped). |
 | B7–B8 | 🟡/🔵 | Filter selectors low-visibility; too few listings to test combinations. |
 
+**▸ Compare — Filters & sorting.** Good sites keep location + type + price + beds/baths combinable in one toolbar, with sorting and no value pre-filled into the price box. Reference: [Property Finder search](https://www.propertyfinder.ae/en/buy/dubai/apartments-for-sale-dubai-marina.html).
+
+| ❌ Silver Oak (the problem) | ✅ Best-in-class — Property Finder |
+|---|---|
+| ![Silver Oak search](assets/ours-search.jpg) | ![Property Finder filters](assets/ref-pf-filters.jpg) |
+
 ### C. Listings & property cards
 | # | Sev | Issue |
 |---|---|---|
@@ -94,6 +106,18 @@ These are unmodified full-page captures of the live site. In the interactive rep
 | C2 | 🟠 | Same squishing on the homepage. |
 | C3 | 🟡 | Card images low-res / zoomed-in. |
 | C4 | 🟡 | Call/Email/WhatsApp shown on every card before opening the property (clutter). |
+
+**▸ Compare — Listing cards.** Price beside a TruCheck "validated on [date]" badge, correctly-proportioned images, and contact actions held back to the detail view. Reference: [Bayut](https://www.bayut.com/for-sale/property/dubai/).
+
+| ❌ Silver Oak (the problem) | ✅ Best-in-class — Bayut |
+|---|---|
+| ![Silver Oak cards](assets/ours-cards.jpg) | ![Bayut cards](assets/ref-bayut-cards.jpg) |
+
+**▸ Compare — Property detail page.** Large correctly-proportioned gallery, a prominent price in one number font, scannable beds/baths/area specs, and a clean structured payment plan (no duplicated "ROI up to…" caption). Reference: [Bayut listing](https://www.bayut.com/for-sale/property/dubai/).
+
+| ❌ Silver Oak (the problem) | ✅ Best-in-class — Bayut |
+|---|---|
+| ![Silver Oak detail](assets/ours-detail.jpg) | ![Bayut detail](assets/ref-bayut-detail.jpg) |
 
 ### D. Data accuracy & pricing
 See the full verification in **§5**. Summary: 32/39 accurate, 4 minor drift, **3 to fix**.
@@ -117,6 +141,12 @@ See the full verification in **§5**. Summary: 32/39 accurate, 4 minor drift, **
 | F4 | 🟡 | Affordability **example income is below 10k AED → ineligible** (bad sample). |
 | F5 | 🟡 | "Get Pre-approval" country-code UI issues. |
 | F6–F7 | 🔵 | Dead arrows beside the interest-rate and property-price fields. |
+
+**▸ Compare — Mortgage calculator.** Every field is directly typeable *and* on a slider, with sensible bounds (1–25 yr, 1–10%) and a monthly figure that recalculates live — no dead +/− arrows. Reference: [Mortgage Finder](https://www.mortgagefinder.ae/en/calculator).
+
+| ❌ Silver Oak (the problem) | ✅ Best-in-class — Mortgage Finder |
+|---|---|
+| ![Silver Oak calculator](assets/ours-calc.jpg) | ![Mortgage Finder calculator](assets/ref-mortgage-calc.jpg) |
 
 ### G. Forms & validation
 | # | Sev | Issue |
@@ -275,9 +305,9 @@ Also a **location data issue (not price):** Azizi Milan 30/20/9 are labelled "Al
 
 ---
 
-## 7. Benchmark — what good looks like
+## 7. Benchmark summary
 
-Reference patterns from best-in-class real-estate sites, mapped to the matching Silver Oak findings. (All URLs verified live in 2026. Some — Zillow, Emaar — actively block automated browsers; open them in a normal browser to view.)
+The visual side-by-side comparisons (our screenshot vs the best-in-class reference) are shown **beside each area in §4**. This table maps each benchmarked reference to the findings it addresses. (All URLs verified live in 2026; Zillow and Emaar block automated capture, so they're linked rather than screenshotted.)
 
 | Area | Silver Oak gap | Best-in-class reference | Why it's good |
 |---|---|---|---|
@@ -287,25 +317,6 @@ Reference patterns from best-in-class real-estate sites, mapped to the matching 
 | **Property detail page** | C1 (squished gallery), I1 (price font), H5/H6 (junk subtext) | **Bayut** — open any listing from https://www.bayut.com/for-sale/property/dubai/ · **Emaar off-plan** — https://www.emaar.com/en/ | Large correctly-proportioned gallery, prominent price, scannable beds/baths/area specs, and an explicit structured payment plan (down payment → milestones → handover). |
 | **Trustworthy price on cards** | D1–D3 (price errors), C-cards lack trust cues | **Bayut** — https://www.bayut.com/for-sale/property/dubai/ · **Rightmove** — https://www.rightmove.co.uk/ | Bayut shows the price next to a "TruCheck — validated on [date]" badge tying the price to a verification date; Rightmove honestly labels "Guide Price / POA / Offers Over" so a card never overstates certainty. |
 | **Mobile homepage** | M1–M4 (tiny tap targets, 5–6 px fonts, illegible hero) | **Bayut** (view at ~390 px) — https://www.bayut.com/ · **Zillow** — https://www.zillow.com/ | Single-column hero with a large legible search field, thumb-reachable controls, properly sized tap targets, no horizontal scroll. |
-
-### 7.1 Reference screenshots
-
-**Hero with a visible search bar (Property Finder)** — the search *is* the hero, with a Buy/Rent toggle and one clear CTA. Fixes A1–A3.
-![Property Finder hero](assets/ref-pf-hero.jpg)
-
-**Combinable, sortable filters (Property Finder, Dubai Marina)** — location + type + beds/baths + price + sort all in one persistent toolbar. Fixes B1–B4.
-![Property Finder filters](assets/ref-pf-filters.jpg)
-
-**Trustworthy price on cards (Bayut)** — bold AED price next to a TruCheck "authenticity validated on [date]" badge. Fixes the trust gap behind D1–D3 / C-cards.
-![Bayut listing cards](assets/ref-bayut-cards.jpg)
-
-**Property detail page (Bayut)** — large correctly-proportioned gallery, prominent price, scannable beds/baths/area specs, payment plan. Fixes C1, I1, H5–H6.
-![Bayut detail page](assets/ref-bayut-detail.jpg)
-
-**Mortgage calculator (Mortgage Finder)** — every field typeable *and* on a slider, with sensible bounds and a live result. Fixes F1–F7.
-![Mortgage Finder calculator](assets/ref-mortgage-calc.jpg)
-
-> Zillow and Emaar are linked rather than screenshotted (they block automated capture). The live links above are the authoritative reference.
 
 ---
 
