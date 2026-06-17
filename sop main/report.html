@@ -448,6 +448,7 @@ function cmpHTML(b){
  return `<div class="cmp"><div class="ch"><span class="tag">Compare</span><span class="t">${b.t}</span></div><div class="cols"><div class="cl2 ours"><div class="lab"><span class="mk"></span>Silver Oak — the problem</div><img src="${b.ours}" alt="Silver Oak ${b.t}" loading="lazy"></div><div class="cl2 good"><div class="lab"><span class="mk"></span>Best-in-class — ${b.site}</div><img src="${b.ref}" alt="${b.site} ${b.t}" loading="lazy"><div class="cap">${b.good} <a href="${b.url}" target="_blank" rel="noopener">see it live →</a></div></div></div></div>`;
 }
 const active=new Set(["crit","high","med","low"]);let query="";
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const ledger=document.getElementById('ledger');
 function render(){
   ledger.innerHTML="";let n=0;
@@ -461,7 +462,7 @@ function render(){
     if(BENCH[cat]){const w=document.createElement('div');w.innerHTML=BENCH[cat].map(cmpHTML).join('');while(w.firstChild)ledger.appendChild(w.firstChild);}
     items.forEach(x=>{n++;
       const el=document.createElement('div');el.className="lrow";el.dataset.sev=x.sev;
-      el.innerHTML=`<span class="lid">${x.id}</span><span class="lsev">${SEVN[x.sev]}</span><div><h4>${x.t}</h4><p class="ld">${x.d.length>140?x.d.slice(0,138)+'…':x.d}</p><div class="lcat">${CAT[x.id[0]]}${BENCH[x.id[0]]?' · has comparison':''}</div></div>`;
+      el.innerHTML=`<span class="lid">${x.id}</span><span class="lsev">${SEVN[x.sev]}</span><div><h4>${esc(x.t)}</h4><p class="ld">${esc(x.d.length>140?x.d.slice(0,138)+'…':x.d)}</p><div class="lcat">${CAT[x.id[0]]}${BENCH[x.id[0]]?' · has comparison':''}</div></div>`;
       el.onclick=()=>openD(x.id);ledger.appendChild(el);
     });
   });
