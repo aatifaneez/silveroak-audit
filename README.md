@@ -9,6 +9,7 @@ A collection of website audits — one folder per site.
 ## Per-audit layout
 Each audit folder typically contains:
 - `report.html` — interactive dossier (open in any browser)
+- `DETAILED_AUDIT.md` — full written report with embedded screenshots + pricing detail
 - `MASTER_FINDINGS.md` — consolidated, severity-ranked findings
 - `README.md` — the main written audit
 - plus topic reports (pricing, deeper analysis, security, etc.)

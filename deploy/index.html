@@ -297,7 +297,62 @@ footer.foot b{color:var(--muted);font-weight:500}
   <p id="empty" style="display:none;text-align:center;padding:30px;font-family:var(--mono);color:var(--muted)">No entries match.</p>
 </div></section>
 
-<footer class="foot"><div class="wrap">Silver Oak — website audit · prepared by Claude · 09 Jun 2026<br>Companion docs: <b>MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW</b></div></footer>
+<section class="sec"><div class="wrap">
+  <div class="sec-h reveal"><span class="no">03</span><h2>Benchmark — what good looks like</h2><p>Best-in-class patterns from live competitor sites, mapped to the Silver Oak gaps they fix. Click a site to open the actual reference page.</p></div>
+  <style>
+    .bench{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--ink);border-bottom:none}
+    .bench .bx{padding:22px 22px;border-bottom:1px solid var(--ink);border-right:1px solid var(--line-2)}
+    .bench .bx:nth-child(even){border-right:none}
+    .bench .area{font-family:var(--serif);font-size:20px;font-weight:560;line-height:1.15}
+    .bench .refs{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:8px 0 12px}
+    .bench .good{font-size:14.5px;color:var(--ink);margin:0 0 14px}
+    .bench .lk{display:flex;flex-direction:column;gap:5px}
+    .bench .lk a{font-family:var(--mono);font-size:12px;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;width:fit-content}
+    .bench .lk a:hover{border-color:var(--gold)}
+    @media(max-width:680px){.bench{grid-template-columns:1fr}.bench .bx{border-right:none}}
+  </style>
+  <div class="bench">
+    <div class="bx">
+      <div class="area">Hero with a visible search CTA</div>
+      <div class="refs">fixes A1 · A2 · A3 — blank hero, baked-in text, no CTA</div>
+      <p class="good">The search bar <em>is</em> the hero — front-and-centre on load with a clear Buy/Rent toggle and one dominant CTA. Real text, instant paint, no heavy video.</p>
+      <div class="lk"><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">propertyfinder.ae →</a><a href="https://www.rightmove.co.uk/" target="_blank" rel="noopener">rightmove.co.uk →</a></div>
+    </div>
+    <div class="bx">
+      <div class="area">Combinable, sortable filters</div>
+      <div class="refs">fixes B1 · B2 · B3 · B4 — can't combine type+location, no sort</div>
+      <p class="good">Location + type + price + beds/baths stay visible and combinable in one persistent toolbar, with the active filters encoded in a clean, shareable URL.</p>
+      <div class="lk"><a href="https://www.propertyfinder.ae/en/buy/dubai/apartments-for-sale-dubai-marina.html" target="_blank" rel="noopener">propertyfinder.ae — Dubai Marina search →</a></div>
+    </div>
+    <div class="bx">
+      <div class="area">Mortgage / affordability calculator</div>
+      <div class="refs">fixes F1–F7 — untypeable rate, 0.1 steps, dead arrows</div>
+      <p class="good">Every field is directly typeable <em>and</em> has a slider, with sensible min/max bounds (1–25 yr term, 1–10% rate) and a result that recalculates instantly.</p>
+      <div class="lk"><a href="https://www.mortgagefinder.ae/en/calculator" target="_blank" rel="noopener">mortgagefinder.ae/calculator →</a><a href="https://www.zillow.com/mortgage-calculator/house-affordability/" target="_blank" rel="noopener">zillow.com affordability →</a></div>
+    </div>
+    <div class="bx">
+      <div class="area">Property detail page</div>
+      <div class="refs">fixes C1 · I1 · H5 · H6 — squished gallery, price font, junk subtext</div>
+      <p class="good">A large, correctly-proportioned gallery, a prominent price, scannable beds/baths/area specs, and an explicit structured payment plan (down payment → milestones → handover).</p>
+      <div class="lk"><a href="https://www.bayut.com/for-sale/property/dubai/" target="_blank" rel="noopener">bayut.com — open any listing →</a><a href="https://www.emaar.com/en/" target="_blank" rel="noopener">emaar.com off-plan →</a></div>
+    </div>
+    <div class="bx">
+      <div class="area">Trustworthy price on cards</div>
+      <div class="refs">fixes D1–D3 — price errors, no trust cue on cards</div>
+      <p class="good">Bayut shows the price next to a "TruCheck — validated on [date]" badge tying the price to a verification date; Rightmove honestly labels "Guide Price / POA / Offers Over" so a card never overstates certainty.</p>
+      <div class="lk"><a href="https://www.bayut.com/for-sale/property/dubai/" target="_blank" rel="noopener">bayut.com — TruCheck cards →</a><a href="https://www.rightmove.co.uk/" target="_blank" rel="noopener">rightmove.co.uk →</a></div>
+    </div>
+    <div class="bx">
+      <div class="area">Mobile homepage</div>
+      <div class="refs">fixes M1 · M2 · M3 · M4 — tiny tap targets &amp; 5–6px fonts</div>
+      <p class="good">Single-column hero with a large legible search field, thumb-reachable controls, properly sized tap targets, and no horizontal scroll.</p>
+      <div class="lk"><a href="https://www.bayut.com/" target="_blank" rel="noopener">bayut.com (view at ~390px) →</a><a href="https://www.zillow.com/" target="_blank" rel="noopener">zillow.com →</a></div>
+    </div>
+  </div>
+  <p class="exnote">Live links open the actual reference page. Some (Zillow, Emaar) block automated browsers — open them in a normal browser. Third-party screenshots are intentionally not embedded; the live links are the authoritative reference.</p>
+</div></section>
+
+<footer class="foot"><div class="wrap">Silver Oak — website audit · prepared by Claude · Jun 2026<br>Companion docs: <b>DETAILED_AUDIT · MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW</b></div></footer>
 
 <div class="scrim" id="scrim"></div>
 <aside class="drawer" id="drawer">
@@ -350,6 +405,7 @@ const F=[
 {id:"E5",sev:"med",t:"'In Dubai' shows non-Dubai",d:`The "Exclusive Properties in Dubai" section features Sharjah/UAQ projects.`,f:`Fix the labelling or the content.`},
 {id:"E6",sev:"low",t:"Generic logo alt text",d:`Developer logos use generic alt text "Developer 1...12" instead of brand names (accessibility + SEO miss).`,f:`Use real brand names in alt.`},
 {id:"E7",sev:"low",t:"Marquee logos uneven/duplicated",d:`The developer logo marquee has inconsistent sizes and duplicated logos (EMAAR/NAKHEEL repeat).`,f:`Normalise sizing and dedupe.`},
+{id:"E8",sev:"high",t:"Main content can render blank",d:`The page ships its main content inside a wrapper that is display:none until client-side JS "hydrates" and swaps it in. While the tab is backgrounded or hydration is slow, the visitor sees only the header + footer shell — a blank page. Reproduced repeatedly on the detail, mortgage and home pages during this audit (the page measured ~1,800px tall with the content hidden, then ~6,300px once revealed). There is no server-rendered visible fallback, so any hydration hiccup = a blank page and crawlers can index an empty shell. This is the mechanism behind the intermittent blank detail page and the empty carousel (E3).`,f:`Server-render the visible content (or show a real skeleton), and never gate the whole page behind display:none. Ensure content paints without waiting on full hydration.`},
 {id:"F1",sev:"high",t:"Mortgage calc ignores minimum",d:`The mortgage calculator shows values even when the minimum requirement isn't met — inconsistent with the affordability calculator, which gates its output.`,f:`Gate output behind validation consistently.`},
 {id:"F2",sev:"high",t:"Interest rate steps 0.1 only",d:`The interest rate only changes by 0.1 via the buttons, making 3.99% or 4.99% impossible to enter.`,f:`Allow a finer step and free numeric input.`},
 {id:"F3",sev:"high",t:"Can't type interest rate",d:`There's no way to type the interest rate manually.`,f:`Allow typed input.`},
