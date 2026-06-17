@@ -153,6 +153,32 @@ body::before{content:none}
 .lrow .lcat{font-family:var(--mono);font-size:10px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em;margin-top:6px}
 .lrow.hide{display:none}
 
+/* ---------- area headers + comparison (issue vs best-in-class) ---------- */
+.cathead{display:flex;align-items:baseline;gap:12px;margin:22px 0 2px;padding-bottom:9px;border-bottom:1px solid var(--line)}
+.cathead .cl{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--gold)}
+.cathead h3{font-family:var(--serif);font-weight:560;font-size:22px;margin:0;letter-spacing:-.01em}
+.cathead .ct{margin-left:auto;font-family:var(--mono);font-size:10.5px;color:var(--faint);text-transform:uppercase;letter-spacing:.08em}
+.cmp{border:1px solid var(--ink);background:var(--panel);margin:0}
+.cmp .ch{display:flex;align-items:center;gap:10px;padding:10px 15px;border-bottom:1px solid var(--line-2);background:var(--panel-2)}
+.cmp .ch .t{font-family:var(--serif);font-size:16px;font-weight:560}
+.cmp .ch .tag{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);padding:3px 7px}
+.cmp .cols{display:grid;grid-template-columns:1fr 1fr}
+.cmp .cl2{padding:14px 16px}
+.cmp .cl2.ours{border-right:1px solid var(--line-2)}
+.cmp .cl2 .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px;display:flex;align-items:center;gap:7px}
+.cmp .cl2 .lab .mk{width:9px;height:9px;border-radius:50%}
+.cmp .cl2.ours .lab{color:var(--crit)}.cmp .cl2.ours .lab .mk{background:var(--crit)}
+.cmp .cl2.good .lab{color:#1f7a44}.cmp .cl2.good .lab .mk{background:#1f7a44}
+.cmp img{display:block;width:100%;height:auto;border:1px solid var(--line)}
+.cmp .cap{font-size:13px;color:var(--muted);margin-top:10px;line-height:1.55}
+.cmp .cap a,.cmp.note a{color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line)}
+.cmp .cap a:hover,.cmp.note a:hover{border-color:var(--gold)}
+.cmp.note{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;padding:12px 16px}
+.cmp.note .lab{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#1f7a44;white-space:nowrap}
+.cmp.note .cap{margin-top:0}
+.drawer .dlink{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line)}
+@media(max-width:680px){.cmp .cols{grid-template-columns:1fr}.cmp .cl2.ours{border-right:none;border-bottom:1px solid var(--line-2)}}
+
 /* ---------- drawer ---------- */
 .scrim{position:fixed;inset:0;background:rgba(24,22,18,.4);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:.22s;z-index:90}
 .scrim.open{opacity:1;pointer-events:auto}
@@ -292,70 +318,9 @@ footer.foot b{color:var(--muted);font-weight:500}
 </div></section>
 
 <section class="sec"><div class="wrap">
-  <div class="sec-h reveal"><span class="no">02</span><h2>All findings</h2><p>Filter above; click a row for the issue &amp; the fix.</p></div>
+  <div class="sec-h reveal"><span class="no">02</span><h2>Findings &amp; comparisons</h2><p>Grouped by area — each area sets our issue beside a best-in-class example. Filter by severity above; click any row for the fix.</p></div>
   <div class="ledger" id="ledger"></div>
   <p id="empty" style="display:none;text-align:center;padding:30px;font-family:var(--mono);color:var(--muted)">No entries match.</p>
-</div></section>
-
-<section class="sec"><div class="wrap">
-  <div class="sec-h reveal"><span class="no">03</span><h2>Benchmark — what good looks like</h2><p>Best-in-class patterns from live competitor sites, mapped to the Silver Oak gaps they fix. Click a site to open the actual reference page.</p></div>
-  <style>
-    .bench{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--ink);border-bottom:none}
-    .bench .bx{padding:22px 22px;border-bottom:1px solid var(--ink);border-right:1px solid var(--line-2)}
-    .bench .bx:nth-child(even){border-right:none}
-    .bench .area{font-family:var(--serif);font-size:20px;font-weight:560;line-height:1.15}
-    .bench .refs{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:8px 0 12px}
-    .bench .good{font-size:14.5px;color:var(--ink);margin:0 0 14px}
-    .bench .shot{display:block;width:100%;height:auto;border:1px solid var(--line);margin:2px 0 13px}
-    .bench .lk{display:flex;flex-direction:column;gap:5px}
-    .bench .lk a{font-family:var(--mono);font-size:12px;color:var(--gold);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;width:fit-content}
-    .bench .lk a:hover{border-color:var(--gold)}
-    @media(max-width:680px){.bench{grid-template-columns:1fr}.bench .bx{border-right:none}}
-  </style>
-  <div class="bench">
-    <div class="bx">
-      <div class="area">Hero with a visible search CTA</div>
-      <img class="shot" src="assets/ref-pf-hero.jpg" alt="Property Finder homepage hero with search bar" loading="lazy">
-      <div class="refs">fixes A1 · A2 · A3 — blank hero, baked-in text, no CTA</div>
-      <p class="good">The search bar <em>is</em> the hero — front-and-centre on load with a clear Buy/Rent toggle and one dominant CTA. Real text, instant paint, no heavy video.</p>
-      <div class="lk"><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">propertyfinder.ae →</a><a href="https://www.rightmove.co.uk/" target="_blank" rel="noopener">rightmove.co.uk →</a></div>
-    </div>
-    <div class="bx">
-      <div class="area">Combinable, sortable filters</div>
-      <img class="shot" src="assets/ref-pf-filters.jpg" alt="Property Finder combinable filter toolbar" loading="lazy">
-      <div class="refs">fixes B1 · B2 · B3 · B4 — can't combine type+location, no sort</div>
-      <p class="good">Location + type + price + beds/baths stay visible and combinable in one persistent toolbar, with the active filters encoded in a clean, shareable URL.</p>
-      <div class="lk"><a href="https://www.propertyfinder.ae/en/buy/dubai/apartments-for-sale-dubai-marina.html" target="_blank" rel="noopener">propertyfinder.ae — Dubai Marina search →</a></div>
-    </div>
-    <div class="bx">
-      <div class="area">Mortgage / affordability calculator</div>
-      <img class="shot" src="assets/ref-mortgage-calc.jpg" alt="Mortgage Finder calculator with typeable inputs and live result" loading="lazy">
-      <div class="refs">fixes F1–F7 — untypeable rate, 0.1 steps, dead arrows</div>
-      <p class="good">Every field is directly typeable <em>and</em> has a slider, with sensible min/max bounds (1–25 yr term, 1–10% rate) and a result that recalculates instantly.</p>
-      <div class="lk"><a href="https://www.mortgagefinder.ae/en/calculator" target="_blank" rel="noopener">mortgagefinder.ae/calculator →</a><a href="https://www.zillow.com/mortgage-calculator/house-affordability/" target="_blank" rel="noopener">zillow.com affordability →</a></div>
-    </div>
-    <div class="bx">
-      <div class="area">Property detail page</div>
-      <img class="shot" src="assets/ref-bayut-detail.jpg" alt="Bayut property detail page with gallery, price and specs" loading="lazy">
-      <div class="refs">fixes C1 · I1 · H5 · H6 — squished gallery, price font, junk subtext</div>
-      <p class="good">A large, correctly-proportioned gallery, a prominent price, scannable beds/baths/area specs, and an explicit structured payment plan (down payment → milestones → handover).</p>
-      <div class="lk"><a href="https://www.bayut.com/for-sale/property/dubai/" target="_blank" rel="noopener">bayut.com — open any listing →</a><a href="https://www.emaar.com/en/" target="_blank" rel="noopener">emaar.com off-plan →</a></div>
-    </div>
-    <div class="bx">
-      <div class="area">Trustworthy price on cards</div>
-      <img class="shot" src="assets/ref-bayut-cards.jpg" alt="Bayut listing cards with price and TruCheck validated badge" loading="lazy">
-      <div class="refs">fixes D1–D3 — price errors, no trust cue on cards</div>
-      <p class="good">Bayut shows the price next to a "TruCheck — validated on [date]" badge tying the price to a verification date; Rightmove honestly labels "Guide Price / POA / Offers Over" so a card never overstates certainty.</p>
-      <div class="lk"><a href="https://www.bayut.com/for-sale/property/dubai/" target="_blank" rel="noopener">bayut.com — TruCheck cards →</a><a href="https://www.rightmove.co.uk/" target="_blank" rel="noopener">rightmove.co.uk →</a></div>
-    </div>
-    <div class="bx">
-      <div class="area">Mobile homepage</div>
-      <div class="refs">fixes M1 · M2 · M3 · M4 — tiny tap targets &amp; 5–6px fonts</div>
-      <p class="good">Single-column hero with a large legible search field, thumb-reachable controls, properly sized tap targets, and no horizontal scroll.</p>
-      <div class="lk"><a href="https://www.bayut.com/" target="_blank" rel="noopener">bayut.com (view at ~390px) →</a><a href="https://www.zillow.com/" target="_blank" rel="noopener">zillow.com →</a></div>
-    </div>
-  </div>
-  <p class="exnote">Real screenshots of the reference sites; click any link to open the live page. (Zillow &amp; Emaar are linked rather than shown — they block automated capture. The mobile row is link-only.)</p>
 </div></section>
 
 <footer class="foot"><div class="wrap">Silver Oak — website audit · prepared by Claude · Jun 2026<br>Companion docs: <b>DETAILED_AUDIT · MASTER_FINDINGS · PRICE_VERIFICATION · DEEPER_ANALYSIS · SECURITY_REVIEW</b></div></footer>
@@ -367,6 +332,7 @@ footer.foot b{color:var(--muted);font-weight:500}
   <div class="meta" id="dMeta"></div>
   <div class="blk"><div class="h">The problem</div><p id="dDesc"></p></div>
   <div class="blk"><div class="h">The fix</div><div class="fix"><p id="dFix"></p></div></div>
+  <div class="blk" id="dBenchBlk" style="display:none"><div class="h">What good looks like</div><div id="dBench"></div></div>
 </aside>
 
 <script>
@@ -467,22 +433,46 @@ const F=[
 {id:"M5",sev:"low",t:"No horizontal overflow (good)",d:`Verified good: at 390px the document scroll width is 380px — no horizontal scroll/overflow on mobile.`,f:`No action needed.`}
 ];
 const FM=Object.fromEntries(F.map(x=>[x.id,x]));
+const BENCH={
+ A:[{t:"Hero & search bar",ours:"assets/ours-hero.jpg",ref:"assets/ref-pf-hero.jpg",site:"Property Finder",url:"https://www.propertyfinder.ae/",good:`The search bar <em>is</em> the hero — front-and-centre on load with a Buy/Rent toggle and one clear CTA. Real HTML text, instant paint, no heavy video.`}],
+ B:[{t:"Filters & sorting",ours:"assets/ours-search.jpg",ref:"assets/ref-pf-filters.jpg",site:"Property Finder",url:"https://www.propertyfinder.ae/en/buy/dubai/apartments-for-sale-dubai-marina.html",good:`Location, type, price and beds/baths stay visible and combinable in one toolbar — with sorting, and no value pre-filled into the price box.`}],
+ C:[
+  {t:"Listing cards",ours:"assets/ours-cards.jpg",ref:"assets/ref-bayut-cards.jpg",site:"Bayut",url:"https://www.bayut.com/for-sale/property/dubai/",good:`Bold AED price beside a TruCheck "validated on [date]" badge, correctly-proportioned images, and contact actions held back to the detail view — not repeated on every card.`},
+  {t:"Property detail page",ours:"assets/ours-detail.jpg",ref:"assets/ref-bayut-detail.jpg",site:"Bayut",url:"https://www.bayut.com/for-sale/property/dubai/",good:`A large, correctly-proportioned gallery, a prominent price in one number font, scannable beds/baths/area specs, and a clean structured payment plan — no duplicated "ROI up to…" caption.`}
+ ],
+ F:[{t:"Mortgage calculator",ours:"assets/ours-calc.jpg",ref:"assets/ref-mortgage-calc.jpg",site:"Mortgage Finder",url:"https://www.mortgagefinder.ae/en/calculator",good:`Every field is directly typeable <em>and</em> on a slider, with sensible bounds (1–25 yr, 1–10%) and a monthly figure that recalculates live — no dead +/− arrows.`}],
+ M:[{linkonly:true,good:`Single-column hero with a large legible search field, 44px tap targets and a 14px+ minimum font.`,links:[["bayut.com (≈390px)","https://www.bayut.com/"],["zillow.com","https://www.zillow.com/"]]}]
+};
+function cmpHTML(b){
+ if(b.linkonly){const ls=(b.links||[]).map(l=>`<a href="${l[1]}" target="_blank" rel="noopener">${l[0]} →</a>`).join(' · ');return `<div class="cmp note"><span class="lab">✓ Best-in-class</span><span class="cap">${b.good} ${ls}</span></div>`;}
+ return `<div class="cmp"><div class="ch"><span class="tag">Compare</span><span class="t">${b.t}</span></div><div class="cols"><div class="cl2 ours"><div class="lab"><span class="mk"></span>Silver Oak — the problem</div><img src="${b.ours}" alt="Silver Oak ${b.t}" loading="lazy"></div><div class="cl2 good"><div class="lab"><span class="mk"></span>Best-in-class — ${b.site}</div><img src="${b.ref}" alt="${b.site} ${b.t}" loading="lazy"><div class="cap">${b.good} <a href="${b.url}" target="_blank" rel="noopener">see it live →</a></div></div></div></div>`;
+}
 const active=new Set(["crit","high","med","low"]);let query="";
 const ledger=document.getElementById('ledger');
 function render(){
   ledger.innerHTML="";let n=0;
-  F.forEach(x=>{
-    const show=active.has(x.sev)&&(x.t+" "+x.d+" "+x.id+" "+CAT[x.id[0]]).toLowerCase().includes(query);
-    if(!show)return;n++;
-    const el=document.createElement('div');el.className="lrow";el.dataset.sev=x.sev;
-    el.innerHTML=`<span class="lid">${x.id}</span><span class="lsev">${SEVN[x.sev]}</span><div><h4>${x.t}</h4><p class="ld">${x.d.length>140?x.d.slice(0,138)+'…':x.d}</p><div class="lcat">${CAT[x.id[0]]}</div></div>`;
-    el.onclick=()=>openD(x.id);ledger.appendChild(el);
+  const cats=[...new Set(F.map(x=>x.id[0]))];
+  cats.forEach(cat=>{
+    const items=F.filter(x=>x.id[0]===cat&&active.has(x.sev)&&(x.t+" "+x.d+" "+x.id+" "+CAT[cat]).toLowerCase().includes(query));
+    if(!items.length)return;
+    const h=document.createElement('div');h.className="cathead";
+    h.innerHTML=`<span class="cl">${cat}</span><h3>${CAT[cat]}</h3><span class="ct">${items.length} issue${items.length>1?'s':''}</span>`;
+    ledger.appendChild(h);
+    if(BENCH[cat]){const w=document.createElement('div');w.innerHTML=BENCH[cat].map(cmpHTML).join('');while(w.firstChild)ledger.appendChild(w.firstChild);}
+    items.forEach(x=>{n++;
+      const el=document.createElement('div');el.className="lrow";el.dataset.sev=x.sev;
+      el.innerHTML=`<span class="lid">${x.id}</span><span class="lsev">${SEVN[x.sev]}</span><div><h4>${x.t}</h4><p class="ld">${x.d.length>140?x.d.slice(0,138)+'…':x.d}</p><div class="lcat">${CAT[x.id[0]]}${BENCH[x.id[0]]?' · has comparison':''}</div></div>`;
+      el.onclick=()=>openD(x.id);ledger.appendChild(el);
+    });
   });
   document.getElementById('empty').style.display=n?"none":"block";
   document.querySelectorAll('.pin').forEach(p=>{const x=FM[p.dataset.fid];p.classList.toggle('hide',!(x&&active.has(x.sev)&&(x.t+" "+x.d).toLowerCase().includes(query)));});
 }
 const scrim=document.getElementById('scrim'),drawer=document.getElementById('drawer');
-function openD(id){const x=FM[id];if(!x)return;document.getElementById('dId').textContent=id+" · "+CAT[id[0]];document.getElementById('dTitle').textContent=x.t;document.getElementById('dMeta').innerHTML=`<span class="badge ${x.sev}">${SEVN[x.sev]}</span>`;document.getElementById('dDesc').textContent=x.d;document.getElementById('dFix').textContent=x.f;scrim.classList.add('open');drawer.classList.add('open');}
+function openD(id){const x=FM[id];if(!x)return;document.getElementById('dId').textContent=id+" · "+CAT[id[0]];document.getElementById('dTitle').textContent=x.t;document.getElementById('dMeta').innerHTML=`<span class="badge ${x.sev}">${SEVN[x.sev]}</span>`;document.getElementById('dDesc').textContent=x.d;document.getElementById('dFix').textContent=x.f;
+  const bk=BENCH[id[0]],blk=document.getElementById('dBenchBlk');
+  if(bk){const b=bk.find(z=>!z.linkonly)||bk[0];document.getElementById('dBench').innerHTML=b.linkonly?`<p style="margin:0 0 9px;font-size:14px;line-height:1.55">${b.good}</p>`+(b.links||[]).map(l=>`<a class="dlink" href="${l[1]}" target="_blank" rel="noopener" style="margin-right:12px">${l[0]} →</a>`).join(''):`<img src="${b.ref}" alt="${b.site}" style="display:block;width:100%;border:1px solid var(--line)"><p style="margin:9px 0 6px;font-size:13.5px;color:var(--muted);line-height:1.55">${b.good}</p><a class="dlink" href="${b.url}" target="_blank" rel="noopener">${b.site} — see it live →</a>`;blk.style.display="";}else blk.style.display="none";
+  scrim.classList.add('open');drawer.classList.add('open');}
 function closeD(){scrim.classList.remove('open');drawer.classList.remove('open');}
 scrim.onclick=closeD;document.getElementById('closeD').onclick=closeD;document.addEventListener('keydown',e=>{if(e.key==="Escape")closeD();});
 document.querySelectorAll('.pin').forEach(p=>p.onclick=()=>openD(p.dataset.fid));
