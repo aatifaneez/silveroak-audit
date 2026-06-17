@@ -288,7 +288,24 @@ Reference patterns from best-in-class real-estate sites, mapped to the matching 
 | **Trustworthy price on cards** | D1–D3 (price errors), C-cards lack trust cues | **Bayut** — https://www.bayut.com/for-sale/property/dubai/ · **Rightmove** — https://www.rightmove.co.uk/ | Bayut shows the price next to a "TruCheck — validated on [date]" badge tying the price to a verification date; Rightmove honestly labels "Guide Price / POA / Offers Over" so a card never overstates certainty. |
 | **Mobile homepage** | M1–M4 (tiny tap targets, 5–6 px fonts, illegible hero) | **Bayut** (view at ~390 px) — https://www.bayut.com/ · **Zillow** — https://www.zillow.com/ | Single-column hero with a large legible search field, thumb-reachable controls, properly sized tap targets, no horizontal scroll. |
 
-> The interactive report links straight to these references. (Embedded screenshots of third-party sites were intentionally omitted here — they require saving images from each external origin, which this environment blocks; the live links above are the authoritative reference.)
+### 7.1 Reference screenshots
+
+**Hero with a visible search bar (Property Finder)** — the search *is* the hero, with a Buy/Rent toggle and one clear CTA. Fixes A1–A3.
+![Property Finder hero](assets/ref-pf-hero.jpg)
+
+**Combinable, sortable filters (Property Finder, Dubai Marina)** — location + type + beds/baths + price + sort all in one persistent toolbar. Fixes B1–B4.
+![Property Finder filters](assets/ref-pf-filters.jpg)
+
+**Trustworthy price on cards (Bayut)** — bold AED price next to a TruCheck "authenticity validated on [date]" badge. Fixes the trust gap behind D1–D3 / C-cards.
+![Bayut listing cards](assets/ref-bayut-cards.jpg)
+
+**Property detail page (Bayut)** — large correctly-proportioned gallery, prominent price, scannable beds/baths/area specs, payment plan. Fixes C1, I1, H5–H6.
+![Bayut detail page](assets/ref-bayut-detail.jpg)
+
+**Mortgage calculator (Mortgage Finder)** — every field typeable *and* on a slider, with sensible bounds and a live result. Fixes F1–F7.
+![Mortgage Finder calculator](assets/ref-mortgage-calc.jpg)
+
+> Zillow and Emaar are linked rather than screenshotted (they block automated capture). The live links above are the authoritative reference.
 
 ---
 
