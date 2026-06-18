@@ -63,7 +63,7 @@ img{max-width:100%}
 .canvas{position:relative;line-height:0;width:100%}
 .canvas>img{display:block;width:100%}
 .figure .cap{padding:11px 16px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);background:var(--card)}
-.figure.mobileshot .frame{display:flex;justify-content:center}
+.figure.mobileshot .frame{display:flex;justify-content:center;align-items:flex-start}
 .figure.mobileshot .canvas{width:340px;max-width:100%}
 
 /* numbered markers */
