@@ -139,7 +139,7 @@
 
 | # | Sev | Issue | Tag |
 |---|---|---|---|
-| K1 | 🟠 | Placeholder phone link **`tel:+1234567890`** in the footer. | verified |
+| K1 | 🟠 | Placeholder phone link **`tel:+1234567890`** — it's the phone icon in the slide-in **mobile menu** (the site's only tel: link), not the visible footer text. The footer's `+971 800 555 555` is correct but plain text, not a link. | verified |
 | K2 | 🟡 | Contact email **`info@silveroakglobal.ae`** (`.ae`) on a **`.com`** site. | verified |
 | K3 | 🟡 | Brand uses **3 TLDs** — `.com` / `.ae` / `.in` — inconsistently. | verified |
 | K4 | 🟡 | Footer phone **`+971 800 555 555`** looks placeholder (may be real toll-free — verify). | observed |

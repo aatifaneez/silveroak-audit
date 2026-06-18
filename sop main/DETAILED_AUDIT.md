@@ -192,7 +192,7 @@ See the full verification in **§5**. Summary: 32/39 accurate, 4 minor drift, **
 ### K. Footer / contact / brand
 | # | Sev | Issue |
 |---|---|---|
-| K1 | 🟠 | Placeholder phone link **`tel:+1234567890`** in the footer. |
+| K1 | 🟠 | The site's only clickable phone link (the phone icon in the slide-in **mobile menu**'s "Contact Us" row) has the placeholder href **`tel:+1234567890`** — tapping it on mobile dials a fake number. The visible footer number `+971 800 555 555` is correct but is plain text, not a link. |
 | K2 | 🟡 | Contact email **`info@silveroakglobal.ae`** (`.ae`) on a `.com` site. |
 | K3 | 🟡 | Brand uses **3 TLDs** (`.com`/`.ae`/`.in`) inconsistently. |
 
