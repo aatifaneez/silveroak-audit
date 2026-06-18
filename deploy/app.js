@@ -36,10 +36,10 @@
 
   /* marker positions, in % of the screenshot [left, top] */
   var POS={
-    homepage:{A9:[6,1.2],A5:[50,1.2],A6:[66,1.2],A10:[96,1.2],A2:[42,4.5],A7:[60,4.5],A8:[50,6.2],A1:[30,9],A4:[70,9],A11:[15,10.5],A12:[85,10.5],A3:[50,12.5],B2:[12,18],B1:[34,18],B7:[52,18.8],B5:[72,18],B6:[95,18],E3:[40,22.5],E5:[62,22.5],I6:[40,36.5],J6:[62,36.5],E2:[40,51],E6:[60,51],E7:[80,51],H8:[50,54],H2:[22,58],H7:[55,58],H9:[50,65],H3:[50,72],I7:[62,79],H10:[50,86]},
-    offplan:{B4:[50,9.5],B3:[85,9.5],E1:[18,9.5],E4:[35,8],D6:[65,8],C1:[19,15],C2:[44,15],C3:[70,15],C4:[19,23],D1:[44,30],D4:[70,31],D2:[19,30],D3:[93,30],D5:[55,38],B8:[50,47]},
-    detail:{I1:[8,4.5],D7:[24,5],H5:[10,7],H1:[22,9.5],G2:[40,9.5],H6:[50,18]},
-    mortgage:{F4:[50,8],F7:[50,15],F1:[75,14],F5:[66,18],F3:[25,21],F2:[49,21],F6:[56,21]},
+    homepage:{A9:[6,1.2],A5:[50,1.2],A6:[66,1.2],A10:[96,1.2],A2:[42,4.5],A7:[60,4.5],A8:[50,6.2],A1:[30,9],A4:[70,9],A11:[15,10.5],A12:[85,10.5],A3:[50,12.5],B2:[12,18],B1:[34,18],B7:[52,18.8],B5:[72,18],B6:[95,18],E3:[40,22.5],E5:[62,22.5],I6:[40,36.5],J6:[62,36.5],E2:[40,51],E6:[60,51],E7:[80,51],H8:[50,54],H2:[22,58],H7:[55,58],H9:[50,65],H3:[50,72],I7:[62,79],H10:[50,86],J1:[92,13],J4:[86,13.8],L1:[30,80.5],J2:[82,81.5],G1:[70,80.5],G3:[58,80.5],K1:[55,95],K2:[68,95],J10:[47,96.5]},
+    offplan:{B4:[50,9.5],B3:[85,9.5],E1:[18,9.5],E4:[35,8],D6:[65,8],C1:[19,15],C2:[44,15],C3:[70,15],C4:[19,23],D1:[44,30],D4:[70,31],D2:[19,30],D3:[93,30],D5:[55,38],B8:[50,47],G1:[70,56],G3:[58,56]},
+    detail:{I1:[8,4.5],D7:[24,5],H5:[10,7],H1:[22,9.5],G2:[40,9.5],H6:[50,18],G1:[75,88],G3:[63,88],E8:[88,2.5]},
+    mortgage:{F4:[50,8],F7:[50,15],F1:[75,14],F5:[66,18],F3:[25,21],F2:[49,21],F6:[56,21],G1:[60,18],E8:[88,6]},
     mobile:{M1:[90,1.5],M3:[50,5.5],M2:[50,25],M5:[93,50],M4:[30,96]}
   };
 
@@ -54,6 +54,9 @@
 
   var P=window.PAGE||{};
   if(P.id&&CONFIG[P.id])P=Object.assign({},CONFIG[P.id],P);
+  // every finding by id, across all pages — lets any page pin a cross-cutting issue
+  var GLOBAL={};
+  if(window.AUDIT)Object.keys(window.AUDIT).forEach(function(k){(window.AUDIT[k].findings||[]).forEach(function(f){GLOBAL[f.id]=f;});});
   function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
 
   function header(){
@@ -113,8 +116,8 @@
     var fs=P.findings||[];
     var pos=POS[P.id];
     if(pos){
-      MARKS=fs.filter(function(f){return pos[f.id];})
-        .map(function(f){return {f:f,xy:pos[f.id]};})
+      MARKS=Object.keys(pos).filter(function(id){return GLOBAL[id];})
+        .map(function(id){return {f:GLOBAL[id],xy:pos[id]};})
         .sort(function(a,b){return a.xy[1]-b.xy[1]||a.xy[0]-b.xy[0];});
     }else{
       // site-wide: order by groups
